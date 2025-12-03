@@ -13,8 +13,6 @@ spec:
       labels:
         app: sift-persist-pod
     spec:
-      nodeSelector:
-        environment: persist
       imagePullSecrets:
       - name: regcred
       containers:
@@ -33,10 +31,4 @@ spec:
             value: "MASTER"
         ports:
         - containerPort: 8091
-        volumeMounts:
-        - mountPath: /opt/couchbase/var
-          name: my-volume
-      volumes:
-        - name: my-volume
-          persistentVolumeClaim:
-            claimName: ebs-persist-pvc
+        
