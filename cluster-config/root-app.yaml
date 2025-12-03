@@ -4,6 +4,7 @@ metadata:
   name: sift-persist
   namespace: argocd
 spec:
+  project: default
   source:
     path: database-services/sift-persist
     repoURL: https://github.com/chakkaringit/poc-cicd-apps
