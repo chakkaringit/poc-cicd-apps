@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sift-persist
+  namespace: argocd
+spec:
+  source:
+    path: database-services/sift-persist
+    repoURL: https://github.com/chakkaringit/poc-cicd-apps
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: opolo
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true

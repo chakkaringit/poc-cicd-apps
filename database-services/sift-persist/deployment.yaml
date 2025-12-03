@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: sift-persist
+spec:
+  serviceName: "sift-persist"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sift-persist-pod
+  template:
+    metadata:
+      labels:
+        app: sift-persist-pod
+    spec:
+      nodeSelector:
+        environment: persist
+      imagePullSecrets:
+      - name: regcred
+      containers:
+      - name: sift-persist
+        image: knowesis/persist:4.5.0-K8
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 100m
+            memory: 1024Mi
+          limits:
+            cpu: 200m
+            memory: 2048Mi
+        env:
+          - name: TYPE
+            value: "MASTER"
+        ports:
+        - containerPort: 8091
+        volumeMounts:
+        - mountPath: /opt/couchbase/var
+          name: my-volume
+      volumes:
+        - name: my-volume
+          persistentVolumeClaim:
+            claimName: ebs-persist-pvc
