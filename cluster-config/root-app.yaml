@@ -6,8 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    path: apps/sift-persist
+    path: database-services/sift-persist
     repoURL: https://github.com/chakkaringit/poc-cicd-apps
+    targetRevision: main
   destination:
     server: https://kubernetes.default.svc
     namespace: opolo
@@ -17,3 +18,35 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: all-services
+  namespace: argocd
+spec:
+  generators:
+  - git:
+      repoURL: https://github.com/chakkaringit/poc-cicd-apps
+      revision: main
+      directories:
+      - path: apps/*
+  template:
+    metadata:
+      name: '{{path.basename}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/chakkaringit/poc-cicd-apps
+        targetRevision: main
+        path: '{{path}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: opolo
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
