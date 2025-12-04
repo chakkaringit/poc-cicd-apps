@@ -31,6 +31,9 @@ spec:
       labels:
         app: postgres-pod
     spec:
+      securityContext:
+        fsGroup: 1001
+        fsGroupChangePolicy: "OnRootMismatch"
       imagePullSecrets:
       - name: regcred
       hostname: postgresql
