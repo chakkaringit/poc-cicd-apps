@@ -1,3 +1,20 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: opolo-credentials
+type: Opaque
+data:
+  filebeat: bWFhc0A4ODgK
+  keycloak-db: UGE1NXcwcmQK
+  keycloak-admin: UGE1NXcwcmQK
+  postgress-db: U1g2TlpyRDdxRndyeGZSbgo=
+  postgress-url: cG9zdGdyZXM6Ly9vcG9sb3BvcnRhbHVzZXI6U1g2TlpyRDdxRndyeGZSbkBwb3N0Z3Jlc3FsOjU0MzIvcnR1RXlieFlDaGptVlliCg==
+  kibana: bWFhc0A4ODgK
+  redis: cGFzc3cwcmQK
+  portal-admin: c2lmdEAxMjMK
+  aws-secret: OUgzUnBpVkxCNVVERzZCT0twTXM0R09tMXFGU1FjMnlXdFVwdk1BZwo=
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
