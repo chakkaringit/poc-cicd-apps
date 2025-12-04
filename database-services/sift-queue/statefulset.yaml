@@ -20,10 +20,10 @@ spec:
         resources:
           requests:
             cpu: 100m
-            memory: 256Mi
+            memory: 1024Mi
           limits:
             cpu: 100m
-            memory: 256Mi
+            memory: 1024Mi
         env:
         - name: broker_id
           value: '1'
@@ -97,10 +97,10 @@ spec:
         resources:
           requests:
             cpu: 100m
-            memory: 256Mi
+            memory: 1024Mi
           limits:
             cpu: 100m
-            memory: 256Mi
+            memory: 1024Mi
         env:
         - name: broker_id
           value: '2'
@@ -174,10 +174,10 @@ spec:
         resources:
           requests:
             cpu: 100m
-            memory: 256Mi
+            memory: 1024Mi
           limits:
             cpu: 100m
-            memory: 256Mi
+            memory: 1024Mi
         env:
         - name: broker_id
           value: '3'
