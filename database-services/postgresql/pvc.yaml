@@ -5,8 +5,8 @@ metadata:
   namespace: opolo
 spec:
   accessModes:
-    - ReadWriteOnce
+  - ReadWriteOnce
   resources:
     requests:
-      storage: 15Gi
+      storage: 5Gi
   storageClassName: efs-sc

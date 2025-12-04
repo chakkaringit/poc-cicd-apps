@@ -110,7 +110,7 @@ def main():
             service_name = row.get('Service Name', '').strip()
             raw_cpu = row.get('CPU', '').strip()
             raw_ram = row.get('RAM', '').strip()
-            raw_storage = row.get('storage', '').strip()
+            raw_storage = row.get('Storage', '').strip()
             
             if not service_name: continue
                 
