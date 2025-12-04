@@ -13,7 +13,6 @@ data:
   redis: cGFzc3cwcmQK
   portal-admin: c2lmdEAxMjMK
   aws-secret: OUgzUnBpVkxCNVVERzZCT0twTXM0R09tMXFGU1FjMnlXdFVwdk1BZwo=
-
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -33,7 +32,7 @@ spec:
     spec:
       securityContext:
         fsGroup: 1001
-        fsGroupChangePolicy: "OnRootMismatch"
+        fsGroupChangePolicy: OnRootMismatch
       imagePullSecrets:
       - name: regcred
       hostname: postgresql
@@ -64,10 +63,10 @@ spec:
           name: my-volume
         resources:
           requests:
-            memory: 2048Mi
+            memory: 256Mi
             cpu: 100m
           limits:
-            memory: 2048Mi
+            memory: 256Mi
             cpu: 100m
       volumes:
       - name: my-volume
