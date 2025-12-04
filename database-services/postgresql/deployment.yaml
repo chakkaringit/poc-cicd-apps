@@ -30,6 +30,10 @@ spec:
       labels:
         app: postgres-pod
     spec:
+      securityContext:
+        fsGroup: 1000
+        runAsUser: 1000
+        runAsGroup: 1000
       imagePullSecrets:
       - name: regcred
       hostname: postgresql
