@@ -3,26 +3,26 @@ import os
 import yaml
 
 # ================= CONFIGURATION =================
-CSV_FILE = 'resources.csv'          # CSV file name
-APPS_DIR = '../apps'                # Path to apps directory
+CSV_FILE = 'resources.csv'
+APP_SOURCE_DIRS = [
+    '../apps',
+    '../database-services'
+]
 # =================================================
 
 def format_cpu(val):
-    # If CSV contains just a number (e.g., 100), append 'm'
     val = str(val).strip()
     if not val: return None
     if val.isdigit(): return f"{val}m"
     return val
 
 def format_mem(val):
-    # If CSV contains just a number (e.g., 512), append 'Mi'
     val = str(val).strip()
     if not val: return None
     if val.isdigit(): return f"{val}Mi"
     return val
 
 def format_storage(val):
-    # If CSV contains just a number (e.g., 5), append 'Gi'
     val = str(val).strip()
     if not val: return None
     if val.isdigit(): return f"{val}Gi"
@@ -31,7 +31,6 @@ def format_storage(val):
 def update_yaml_file(file_path, cpu, ram, storage, service_name):
     try:
         with open(file_path, 'r') as f:
-            # Load YAML as a list (to handle multi-document files)
             documents = list(yaml.safe_load_all(f))
     except Exception as e:
         print(f"⚠️  Error reading {file_path}: {e}")
@@ -43,12 +42,9 @@ def update_yaml_file(file_path, cpu, ram, storage, service_name):
         if not doc: continue
         kind = doc.get('kind')
 
-        # ---------------------------------------------------------
-        # CASE 1: Deployment / StatefulSet / DaemonSet (Update CPU/RAM)
-        # ---------------------------------------------------------
+        # CASE 1: Workloads (Deployment, StatefulSet, etc.)
         if kind in ['Deployment', 'StatefulSet', 'DaemonSet']:
             try:
-                # 1. Update Container Resources
                 containers = doc['spec']['template']['spec']['containers']
                 for container in containers:
                     if 'resources' not in container: container['resources'] = {}
@@ -65,7 +61,7 @@ def update_yaml_file(file_path, cpu, ram, storage, service_name):
                         
                     modified = True
                 
-                # 2. Update StatefulSet Volume Templates (if present) - for Storage
+                # Update StatefulSet Volume Templates
                 if kind == 'StatefulSet' and storage and 'volumeClaimTemplates' in doc['spec']:
                     for vct in doc['spec']['volumeClaimTemplates']:
                         if 'resources' not in vct['spec']: vct['spec']['resources'] = {}
@@ -78,17 +74,15 @@ def update_yaml_file(file_path, cpu, ram, storage, service_name):
             except KeyError:
                 pass
 
-        # ---------------------------------------------------------
-        # CASE 2: Standalone PersistentVolumeClaim (Update Storage)
-        # ---------------------------------------------------------
+        # CASE 2: PVC
         elif kind == 'PersistentVolumeClaim':
+            print(f"✅ process: {file_path}")
             try:
                 if storage:
                     if 'spec' not in doc: doc['spec'] = {}
                     if 'resources' not in doc['spec']: doc['spec']['resources'] = {}
                     if 'requests' not in doc['spec']['resources']: doc['spec']['resources']['requests'] = {}
                     
-                    # Check current value first (skip if equal)
                     current_storage = doc['spec']['resources']['requests'].get('storage')
                     if current_storage != storage:
                         doc['spec']['resources']['requests']['storage'] = storage
@@ -103,22 +97,20 @@ def update_yaml_file(file_path, cpu, ram, storage, service_name):
         print(f"✅ Updated: {file_path}")
 
 def main():
-    # Check if CSV file exists
     if not os.path.exists(CSV_FILE):
         print(f"Error: CSV file '{CSV_FILE}' not found.")
         return
 
-    print("Starting Resource & Storage Update...")
+    print(f"Starting Update. Scanning directories: {APP_SOURCE_DIRS}")
     
     with open(CSV_FILE, mode='r', encoding='utf-8-sig') as csvfile:
         reader = csv.DictReader(csvfile)
         
         for row in reader:
-            # Match these keys with your CSV headers
             service_name = row.get('Service Name', '').strip()
             raw_cpu = row.get('CPU', '').strip()
             raw_ram = row.get('RAM', '').strip()
-            raw_storage = row.get('Storage', '').strip()
+            raw_storage = row.get('storage', '').strip()
             
             if not service_name: continue
                 
@@ -126,29 +118,34 @@ def main():
             ram_val = format_mem(raw_ram)
             storage_val = format_storage(raw_storage)
             
-            # Skip if there are no values to update
             if not any([cpu_val, ram_val, storage_val]):
                 continue
 
             print(f"Processing {service_name} (CPU:{cpu_val}, RAM:{ram_val}, HDD:{storage_val})...")
             
-            target_dir = os.path.join(APPS_DIR, service_name)
+            # --- Logic ใหม่: วนหา Service ในทุก Folder ที่กำหนด ---
+            found_service_dir = None
             
-            if not os.path.exists(target_dir):
-                print(f"❌ Directory not found: {target_dir}")
+            for source_dir in APP_SOURCE_DIRS:
+                potential_path = os.path.join(source_dir, service_name)
+                if os.path.exists(potential_path):
+                    found_service_dir = potential_path
+                    break # เจอแล้วหยุดหาทันที (First match wins)
+            
+            if not found_service_dir:
+                print(f"❌ Directory not found for service '{service_name}' in any configured paths.")
                 continue
-                
-            # Scan for all YAML files in that directory
-            # We read every file to check if it contains PVC or Workload definitions
-            found_any = False
-            for fname in os.listdir(target_dir):
-                if fname.endswith('.yaml') or fname.endswith('.yml'):
-                    fpath = os.path.join(target_dir, fname)
-                    update_yaml_file(fpath, cpu_val, ram_val, storage_val, service_name)
-                    found_any = True
             
-            if not found_any:
-                print(f"❌ No YAML files found in {service_name}")
+            # เมื่อเจอโฟลเดอร์แล้ว ก็เข้าไปหาไฟล์ YAML ข้างใน
+            found_any_yaml = False
+            for fname in os.listdir(found_service_dir):
+                if fname.endswith('.yaml') or fname.endswith('.yml'):
+                    fpath = os.path.join(found_service_dir, fname)
+                    update_yaml_file(fpath, cpu_val, ram_val, storage_val, service_name)
+                    found_any_yaml = True
+            
+            if not found_any_yaml:
+                print(f"❌ No YAML files found in {found_service_dir}")
 
 if __name__ == "__main__":
     main()

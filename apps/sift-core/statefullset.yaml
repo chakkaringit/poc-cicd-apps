@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    resourceType: core
+    resourceName: core
+  name: sift-core
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sift-core-pod
+  serviceName: sift-core
+  template:
+    metadata:
+      labels:
+        app: sift-core-pod
+        resourceType: core
+        resourceName: core
+    spec:
+      containers:
+      - name: sift-core
+        env:
+        - name: TZ
+          value: Asia/Bangkok
+        - name: DS_NAME
+          value: panda
+        - name: PERSIST_ADDRESS
+          value: http://sift-persist:8091/pools
+        - name: LOG_LEVEL
+          value: info
+        - name: HEAP_SIZE
+          value: 1500m
+        - name: SEEK_TO_BEGINNING
+          value: 'true'
+        - name: SLEEPTIME
+          value: '0'
+        - name: MAX_POLL_RECORDS
+          value: '200'
+        - name: ELASTICSEARCH_URL
+          value: http://sift-es:9200
+        - name: ELASTICSEARCH_SIFT_LOGS_INDEX
+          value: pandalogs
+        - name: CONTAINER_ID
+          value: siftcore
+        - name: ELASTICSEARCH_SIFT_FILREPORT_INDEX
+          value: pandastats
+        - name: ELASTICSEARCH_SIFT_BADRECORDS_INDEX
+          value: siftbadrecords
+        - name: PERSIST_CLIENT
+          value: couchbase
+        - name: PERSIST_PASSWORD
+          value: sift123
+        - name: APP_LOG_LEVEL
+          value: INFO
+        - name: LOG_TYPE
+          value: file
+        - name: STATS_LOG_TYPE
+          value: file
+        - name: BAD_REC_LOG_TYPE
+          value: file
+        - name: SIFT_LOGGER_LOG_TYPE
+          value: file
+        - name: HOST_NAME
+          value: hostname
+        - name: SOCKET_PATH
+          value: /tmp/uds_socket.sock
+        volumeMounts:
+        - name: app-logs
+          mountPath: /home/siftuser/LOGS
+        image: knowesis/sift-core:V7.5.1
+        imagePullPolicy: Always
+        imagePullSecrets:
+        - name: regcred
+        resources:
+          limits:
+            cpu: 100m
+            memory: 1024Mi
+          requests:
+            cpu: 100m
+            memory: 1024Mi
