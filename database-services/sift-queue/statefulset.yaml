@@ -19,11 +19,11 @@ spec:
         image: knowesis/siftqueue:1.2
         resources:
           requests:
-            cpu: 100m
-            memory: 1024Mi
+            cpu: 200m
+            memory: 2000Mi
           limits:
-            cpu: 100m
-            memory: 1024Mi
+            cpu: 200m
+            memory: 2000Mi
         env:
         - name: broker_id
           value: '1'
@@ -96,11 +96,11 @@ spec:
         image: knowesis/siftqueue:1.2
         resources:
           requests:
-            cpu: 100m
-            memory: 1024Mi
+            cpu: 200m
+            memory: 2000Mi
           limits:
-            cpu: 100m
-            memory: 1024Mi
+            cpu: 200m
+            memory: 2000Mi
         env:
         - name: broker_id
           value: '2'
@@ -173,11 +173,11 @@ spec:
         image: knowesis/siftqueue:1.2
         resources:
           requests:
-            cpu: 100m
-            memory: 1024Mi
+            cpu: 200m
+            memory: 2000Mi
           limits:
-            cpu: 100m
-            memory: 1024Mi
+            cpu: 200m
+            memory: 2000Mi
         env:
         - name: broker_id
           value: '3'
