@@ -1,0 +1,3 @@
+﻿Component Name,Service Name,AWS,CPU,RAM,Storage
+Core,sift-core,,100,1024,2
+Data,sift-persist,,200,2048,5

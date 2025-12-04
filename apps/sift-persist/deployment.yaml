@@ -3,7 +3,7 @@ kind: StatefulSet
 metadata:
   name: sift-persist
 spec:
-  serviceName: "sift-persist"
+  serviceName: sift-persist
   replicas: 1
   selector:
     matchLabels:
@@ -21,21 +21,20 @@ spec:
         imagePullPolicy: Always
         resources:
           requests:
-            cpu: 100m
-            memory: 1024Mi
+            cpu: 200m
+            memory: 2048Mi
           limits:
             cpu: 200m
             memory: 2048Mi
         env:
-          - name: TYPE
-            value: "MASTER"
+        - name: TYPE
+          value: MASTER
         ports:
         - containerPort: 8091
         volumeMounts:
         - mountPath: /opt/couchbase/var
           name: data-volume
       volumes:
-        - name: data-volume
-          persistentVolumeClaim:
-            claimName: ebs-persist-pvc
-        
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: ebs-persist-pvc

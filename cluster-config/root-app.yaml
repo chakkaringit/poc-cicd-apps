@@ -6,11 +6,14 @@ metadata:
 spec:
   project: default
   source:
-    path: database-services/sift-persist
+    path: apps/sift-persist
     repoURL: https://github.com/chakkaringit/poc-cicd-apps
   destination:
     server: https://kubernetes.default.svc
     namespace: opolo
   syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
     syncOptions:
       - CreateNamespace=true
