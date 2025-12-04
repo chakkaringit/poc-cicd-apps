@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgresql
+  labels:
+    app: postgres-pod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-pod
+  template:
+    metadata:
+      labels:
+        app: postgres-pod
+    spec:
+      nodeSelector:
+        environment: persist
+      imagePullSecrets:
+      - name: regcred
+      hostname: postgresql
+      containers:
+      - image: knowesis/siftmanage:postgres
+        name: postgresql
+        env:
+        - name: POSTGRES_USER
+          value: opoloportaluser
+        - name: POSTGRES_DB
+          value: rtuEybxYChjmVYb
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: opolo-credentials
+              key: postgress-db
+        - name: KEYCLOCK_IPANDPORT
+          value: localhost:8080
+        - name: OPOLO_ADMIN_IPANDPORT
+          value: localhost:3000
+        - name: PGDATA
+          value: /mnt/data/pgdata
+        ports:
+        - containerPort: 5432
+          name: postgresql
+        volumeMounts:
+        - mountPath: /mnt/data
+          name: my-volume
+        resources:
+          requests:
+            memory: 2048Mi
+            cpu: 200m
+          limits:
+            memory: 2048Mi
+            cpu: 200m
+      volumes:
+      - name: my-volume
+        persistentVolumeClaim:
+          claimName: ebs-postgres-pvc
