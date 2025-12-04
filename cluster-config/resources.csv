@@ -2,6 +2,6 @@
 Core,sift-core,,100,512,2
 Data,sift-persist,,200,2048,5
 Data,postgresql,,100,256,5
-Data,sift-queue,,200,2000,5
+Data,sift-queue,,200,1500,5
 Data,sift-registry,,50,256,5
 Data,opolo-redis,,100,256,5
