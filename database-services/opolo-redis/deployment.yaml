@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opolo-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: opolo-redis-pod
+  template:
+    metadata:
+      labels:
+        app: opolo-redis-pod
+    spec:
+      imagePullSecrets:
+      - name: regcred
+      containers:
+      - name: opolo-redis
+        image: redis:latest
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 100m
+            memory: 256Mi
+        ports:
+        - containerPort: 6379
+        volumeMounts:
+          - name: data-volume
+            mountPath: /data
+      volumes:
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: ebs-opolo-redis-pvc
