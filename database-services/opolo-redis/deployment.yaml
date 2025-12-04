@@ -20,15 +20,15 @@ spec:
         resources:
           requests:
             cpu: 100m
-            memory: 128Mi
+            memory: 256Mi
           limits:
             cpu: 100m
             memory: 256Mi
         ports:
         - containerPort: 6379
         volumeMounts:
-          - name: data-volume
-            mountPath: /data
+        - name: data-volume
+          mountPath: /data
       volumes:
       - name: data-volume
         persistentVolumeClaim:

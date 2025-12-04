@@ -19,7 +19,7 @@ spec:
         resourceName: core
     spec:
       imagePullSecrets:
-        - name: regcred
+      - name: regcred
       containers:
       - name: sift-core
         env:
@@ -68,7 +68,7 @@ spec:
         - name: SOCKET_PATH
           value: /tmp/uds_socket.sock
         image: knowesis/sift-core:V7.5.1
-        imagePullPolicy: Always      
+        imagePullPolicy: Always
         resources:
           limits:
             cpu: 100m

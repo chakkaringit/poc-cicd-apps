@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: siftqueue1
+  labels:
+    app: queue1-master-pod
+spec:
+  ports:
+    - port: 9092
+      name: port-9092
+    - port: 8021
+      name: port-8021
+  selector:
+    app: queue1-master-pod
+  clusterIP: None
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: siftqueue2
+  labels:
+    app: queue2-master-pod
+spec:
+  ports:
+    - port: 9092
+      name: port-9092
+    - port: 8022
+      name: port-8022
+  selector:
+    app: queue2-master-pod
+  clusterIP: None
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: siftqueue3
+  labels:
+    app: queue3-master-pod
+spec:
+  ports:
+    - port: 9092
+      name: port-9092
+    - port: 8023
+      name: port-8023
+  selector:
+    app: queue3-master-pod
+  clusterIP: None

@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: registry1
+  labels:
+    app: registry1-master-pod
+spec:
+  ports:
+    - port: 8015
+      name: port-8015
+    - port: 2181
+      name: port-2181
+    - port: 2888
+      name: port-2888
+    - port: 3888
+      name: port-3888
+  selector:
+    app: registry1-master-pod
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: registry2
+  labels:
+    app: registry2-master-pod
+spec:
+  ports:
+    - port: 8015
+      name: port-8015
+    - port: 2181
+      name: port-2181
+    - port: 2888
+      name: port-2888
+    - port: 3888
+      name: port-3888
+  selector:
+    app: registry2-master-pod
+  clusterIP: None
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: registry3
+  labels:
+    app: registry3-master-pod
+spec:
+  ports:
+    - port: 8015
+      name: port-8015
+    - port: 2181
+      name: port-2181
+    - port: 2888
+      name: port-2888
+    - port: 3888
+      name: port-3888
+  selector:
+    app: registry3-master-pod
+  clusterIP: None

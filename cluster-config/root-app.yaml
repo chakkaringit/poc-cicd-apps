@@ -65,6 +65,50 @@ spec:
 
 ---
 apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sift-registry
+  namespace: argocd
+spec:
+  project: default
+  source:
+    path: database-services/sift-registry
+    repoURL: https://github.com/chakkaringit/poc-cicd-apps
+    targetRevision: main
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: opolo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sift-queue
+  namespace: argocd
+spec:
+  project: default
+  source:
+    path: database-services/sift-queue
+    repoURL: https://github.com/chakkaringit/poc-cicd-apps
+    targetRevision: main
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: opolo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+
+---
+apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: all-services

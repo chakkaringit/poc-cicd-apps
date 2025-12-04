@@ -1,0 +1,170 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: registry1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: registry1-master-pod
+  template:
+    metadata:
+      labels:
+        app: registry1-master-pod
+    spec:
+      hostname: registry1
+      containers:
+      - name: registry1
+        image: knowesis/siftregistry:1.1
+        resources:
+          requests:
+            cpu: 50m
+            memory: 256Mi
+          limits:
+            cpu: 50m
+            memory: 256Mi
+        env:
+        - name: TYPE
+          value: MASTER
+        - name: ZOO_MY_ID
+          value: '1'
+        - name: ZOO_SERVERS
+          value: server.1=0.0.0.0:2888:3888 server.2=registry2:2888:3888 server.3=registry3:2888:3888
+        ports:
+        - containerPort: 2181
+        - containerPort: 8015
+        - containerPort: 2888
+        - containerPort: 3888
+        livenessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - isOpen=`netstat -ant | grep 2181 | wc -l | awk '{print $1}'`;if [ $isOpen
+              -lt 1 ]; then return 1; else echo "Found"; fi
+          failureThreshold: 2
+          periodSeconds: 60
+          initialDelaySeconds: 60
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - isOpen=`netstat -ant | grep 2181 | wc -l | awk '{print $1}'`;if [ $isOpen
+              -lt 1 ]; then return 1; else echo "Found"; fi
+          initialDelaySeconds: 60
+          periodSeconds: 60
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: registry2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: registry2-master-pod
+  template:
+    metadata:
+      labels:
+        app: registry2-master-pod
+    spec:
+      hostname: registry2
+      containers:
+      - name: registry2
+        image: knowesis/siftregistry:1.1
+        resources:
+          requests:
+            cpu: 50m
+            memory: 256Mi
+          limits:
+            cpu: 50m
+            memory: 256Mi
+        env:
+        - name: TYPE
+          value: MASTER
+        - name: ZOO_MY_ID
+          value: '2'
+        - name: ZOO_SERVERS
+          value: server.1=registry1:2888:3888 server.2=0.0.0.0:2888:3888 server.3=registry3:2888:3888
+        ports:
+        - containerPort: 2181
+        - containerPort: 8015
+        - containerPort: 2888
+        - containerPort: 3888
+        livenessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - isOpen=`netstat -ant | grep 2181 | wc -l | awk '{print $1}'`;if [ $isOpen
+              -lt 1 ]; then return 1; else echo "Found"; fi
+          failureThreshold: 2
+          periodSeconds: 60
+          initialDelaySeconds: 60
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - isOpen=`netstat -ant | grep 2181 | wc -l | awk '{print $1}'`;if [ $isOpen
+              -lt 1 ]; then return 1; else echo "Found"; fi
+          initialDelaySeconds: 60
+          periodSeconds: 60
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: registry3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: registry3-master-pod
+  template:
+    metadata:
+      labels:
+        app: registry3-master-pod
+    spec:
+      hostname: registry3
+      containers:
+      - name: registry3
+        image: knowesis/siftregistry:1.1
+        resources:
+          requests:
+            cpu: 50m
+            memory: 256Mi
+          limits:
+            cpu: 50m
+            memory: 256Mi
+        env:
+        - name: TYPE
+          value: MASTER
+        - name: ZOO_MY_ID
+          value: '3'
+        - name: ZOO_SERVERS
+          value: server.1=registry1:2888:3888 server.2=registry2:2888:3888 server.3=0.0.0.0:2888:3888
+        ports:
+        - containerPort: 2181
+        - containerPort: 8015
+        - containerPort: 2888
+        - containerPort: 3888
+        livenessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - isOpen=`netstat -ant | grep 2181 | wc -l | awk '{print $1}'`;if [ $isOpen
+              -lt 1 ]; then return 1; else echo "Found"; fi
+          failureThreshold: 2
+          periodSeconds: 60
+          initialDelaySeconds: 60
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - isOpen=`netstat -ant | grep 2181 | wc -l | awk '{print $1}'`;if [ $isOpen
+              -lt 1 ]; then return 1; else echo "Found"; fi
+          initialDelaySeconds: 60
+          periodSeconds: 60

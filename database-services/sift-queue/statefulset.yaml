@@ -1,0 +1,228 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: siftqueue1
+spec:
+  serviceName: siftqueue1
+  replicas: 1
+  selector:
+    matchLabels:
+      app: queue1-master-pod
+  template:
+    metadata:
+      labels:
+        app: queue1-master-pod
+    spec:
+      hostname: siftqueue1
+      containers:
+      - name: siftqueue1
+        image: knowesis/siftqueue:1.2
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: 100m
+            memory: 256Mi
+        env:
+        - name: broker_id
+          value: '1'
+        - name: queue_connect
+          value: registry1:2181,registry2:2181,registry3:2181
+        - name: log_dirs
+          value: /data/docker/sift/queue/
+        - name: internalhostname
+          value: siftqueue1
+        - name: localport
+          value: '9092'
+        - name: remotehostname
+          value: 13.88.129.189
+        - name: remoteport
+          value: '8021'
+        - name: JMX_PORT
+          value: '3331'
+        ports:
+        - containerPort: 9092
+        livenessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - isOpen=`netstat -ant | grep 9092 | wc -l | awk '{print $1}'`;if [ $isOpen
+              -lt 1 ]; then return 1; else echo "Found"; fi
+          failureThreshold: 2
+          periodSeconds: 60
+          initialDelaySeconds: 60
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - isOpen=`netstat -ant | grep 9092 | wc -l | awk '{print $1}'`;if [ $isOpen
+              -lt 1 ]; then return 1; else echo "Found"; fi
+          initialDelaySeconds: 60
+        volumeMounts:
+        - mountPath: /data/docker/sift/queue
+          name: pv-siftqueue1
+  volumeClaimTemplates:
+  - metadata:
+      name: pv-siftqueue1
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 5Gi
+      storageClassName: efs-sc
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: siftqueue2
+spec:
+  serviceName: siftqueue2
+  replicas: 1
+  selector:
+    matchLabels:
+      app: queue2-master-pod
+  template:
+    metadata:
+      labels:
+        app: queue2-master-pod
+    spec:
+      hostname: siftqueue2
+      containers:
+      - name: siftqueue2
+        image: knowesis/siftqueue:1.2
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: 100m
+            memory: 256Mi
+        env:
+        - name: broker_id
+          value: '2'
+        - name: queue_connect
+          value: registry1:2181,registry2:2181,registry3:2181
+        - name: log_dirs
+          value: /data/docker/sift/queue/
+        - name: internalhostname
+          value: siftqueue2
+        - name: localport
+          value: '9092'
+        - name: remotehostname
+          value: 13.88.129.189
+        - name: remoteport
+          value: '8022'
+        - name: JMX_PORT
+          value: '3331'
+        ports:
+        - containerPort: 9092
+        livenessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - isOpen=`netstat -ant | grep 9092 | wc -l | awk '{print $1}'`;if [ $isOpen
+              -lt 1 ]; then return 1; else echo "Found"; fi
+          failureThreshold: 2
+          periodSeconds: 60
+          initialDelaySeconds: 60
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - isOpen=`netstat -ant | grep 9092 | wc -l | awk '{print $1}'`;if [ $isOpen
+              -lt 1 ]; then return 1; else echo "Found"; fi
+          initialDelaySeconds: 60
+        volumeMounts:
+        - mountPath: /data/docker/sift/queue
+          name: pv-siftqueue2
+  volumeClaimTemplates:
+  - metadata:
+      name: pv-siftqueue2
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 5Gi
+      storageClassName: efs-sc
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: siftqueue3
+spec:
+  serviceName: siftqueue3
+  replicas: 1
+  selector:
+    matchLabels:
+      app: queue3-master-pod
+  template:
+    metadata:
+      labels:
+        app: queue3-master-pod
+    spec:
+      hostname: siftqueue3
+      containers:
+      - name: siftqueue3
+        image: knowesis/siftqueue:1.2
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: 100m
+            memory: 256Mi
+        env:
+        - name: broker_id
+          value: '3'
+        - name: queue_connect
+          value: registry1:2181,registry2:2181,registry3:2181
+        - name: log_dirs
+          value: /data/docker/sift/queue/
+        - name: internalhostname
+          value: siftqueue3
+        - name: localport
+          value: '9092'
+        - name: remotehostname
+          value: 13.88.129.189
+        - name: remoteport
+          value: '8023'
+        ports:
+        - containerPort: 9092
+        livenessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - isOpen=`netstat -ant | grep 9092 | wc -l | awk '{print $1}'`;if [ $isOpen
+              -lt 1 ]; then return 1; else echo "Found"; fi
+          failureThreshold: 2
+          periodSeconds: 60
+          initialDelaySeconds: 60
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - isOpen=`netstat -ant | grep 9092 | wc -l | awk '{print $1}'`;if [ $isOpen
+              -lt 1 ]; then return 1; else echo "Found"; fi
+          initialDelaySeconds: 60
+        volumeMounts:
+        - mountPath: /data/docker/sift/queue
+          name: pv-siftqueue3
+  volumeClaimTemplates:
+  - metadata:
+      name: pv-siftqueue3
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 5Gi
+      storageClassName: efs-sc
