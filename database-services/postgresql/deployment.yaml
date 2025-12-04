@@ -51,12 +51,12 @@ spec:
         - name: OPOLO_ADMIN_IPANDPORT
           value: localhost:3000
         - name: PGDATA
-          value: /mnt/data/pgdata
+          value: /var/lib/postgresql/data1
         ports:
         - containerPort: 5432
           name: postgresql
         volumeMounts:
-        - mountPath: /mnt/data
+        - mountPath: /var/lib/postgresql
           name: my-volume
         resources:
           requests:
