@@ -4,6 +4,8 @@ metadata:
   name: sift-es
   labels:
     app: sift-es
+    resourceType: ELK
+    resourceName: Elastic
 spec:
   replicas: 1
   selector:

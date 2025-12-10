@@ -17,6 +17,8 @@ metadata:
   name: kibana
   labels:
     app: kibana
+    resourceType: ELK
+    resourceName: Kibana
 spec:
   replicas: 1
   selector:
