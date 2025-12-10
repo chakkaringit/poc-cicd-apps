@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+   name: siftmanage-svc
+   labels:
+      app: sift-manage-pod
+spec:
+   ports:
+   -  port: 8042
+      name: http
+   selector:
+      app: sift-manage-pod
+   type: ClusterIP
