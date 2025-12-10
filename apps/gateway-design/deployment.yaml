@@ -21,10 +21,10 @@ spec:
         resources:
           requests:
             cpu: 100m
-            memory: 1024Mi
+            memory: 2048Mi
           limits:
             cpu: 100m
-            memory: 1024Mi
+            memory: 2048Mi
         env:
         - name: SFMC_API_IP
           value: sfmcapi

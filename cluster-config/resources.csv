@@ -8,6 +8,6 @@ Data,opolo-redis,,100,256,5
 App,keycloak,,100,512,0
 App,persistance-api,,100,1024,0
 App,sift-api,,100,1024,0
-App,gateway-design,,100,1024,0
+App,gateway-design,,100,2048,0
 App,portal-admin,,200,512,0
 App,portal-admin,,100,512,0
