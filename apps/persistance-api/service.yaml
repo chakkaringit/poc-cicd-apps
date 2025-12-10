@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: persistence-api
+  labels:
+    app: persistence-api
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+      name: web
+    - port: 10080
+      targetPort: 10080
+      protocol: TCP
+      name: papi
+  selector:
+    app: persistence-api
+  type: ClusterIP

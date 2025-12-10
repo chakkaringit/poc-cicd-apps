@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cmsapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cmsapi-master-pod
+  template:
+    metadata:
+      labels:
+        app: cmsapi-master-pod
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: cmsapi
+          image: knowesis/sift-portal:cms-6.0.1-dev-21112025
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "2048Mi"
+            limits:
+              cpu: "200m"
+              memory: "2048Mi"
+          env:
+            - name: CONFIG_PERSIST_CLIENT
+              value: "couchbase"
+            - name: CONFIG_COUCHBASE_IP
+              value: "http://sift-persist:8091/pools"
+            - name: COUCHBASE_BUCKET
+              value: "content"
+            - name: CONFIG_COUCHBASE_USERNAME
+              value: "Administrator"
+            - name: CONFIG_COUCHBASE_PASSWORD
+              value: "sift123"
+            - name: ENABLE_SSL
+              value: "true"
+            - name: SSL_CERT_PATH
+              value: ""
+            - name: PERSIST_CLIENT
+              value: "couchbase"
+          ports:
+            - containerPort: 8091

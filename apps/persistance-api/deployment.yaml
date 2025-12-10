@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: persistence-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: persistence-api
+  template:
+    metadata:
+      labels:
+        app: persistence-api
+    spec:
+      imagePullSecrets:
+      - name: regcred
+      containers:
+      - name: persistence-api
+        image: chakkarinsom/sift-portal:persistence-api-v6.3.2-dev-230925-check
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 300m
+            memory: 256Mi
+          limits:
+            cpu: 300m
+            memory: 256Mi
+        env:
+        - name: COUCH_BASE_IP
+          value: "sift-persist"
+        - name: KAFKA_HOST
+          value: "siftqueue1:9092"
+        - name: KAFKA_PORT
+          value: "9092"
+        - name: ELASTIC_SEARCH_URL
+          value: "http://sift-es:9200/_bulk"
+        - name: PERSIST_CLIENT
+          value: "couchbase"
+        - name: PERSIST_HOST
+          value: "http://sift-persist:8091/pools"
+        - name: PERSIST_PWD
+          value: "sift123"
+        - name: KAFKA_HOSTNAME
+          value: "siftqueue1:9092"
+        - name: sift.api.kafka.hostname
+          value: "siftqueue1:9092"
+        - name: SIFT_API_GENERIC_KAFKA_TOPICNAME
+          value: "sift.config.in"
+        - name: SIFT_API_GENERIC_KAFKA_GROUPID
+          value: "SiftConfigUpdate"
+        - name: ENABLE_SSL
+          value: "false"
+        - name: SSL_CERT_PATH
+          value: ""
+        - name: HEAP_SIZE
+          value: "1024m"
+        - name: LOG_LEVEL
+          value: "info"
+        - name: SO_KERBEROS_JAAS_CONFIG
+          value: ""
+        - name: SASL_KERBEROS_SERVICE_NAME
+          value: ""
+        - name: SECURITY_PROTOCOL
+          value: ""
+        - name: SO_KERBEROS_TRUSTSTORE_PASSWORD
+          value: ""
+        - name: SO_KERBEROS_TRUSTSTORE_PATH
+          value: ""
+        - name: SO_KERBEROS_TRUSTSTORE_TYPE
+          value: ""
+        - name: cache_ttl
+          value: "30"
+        ports:
+        - containerPort: 8080
+        - containerPort: 10080
+        

@@ -1,0 +1,207 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    resourceName: admin
+    resourceType: portal
+  name: portal-admin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: portal-admin-pod
+  template:
+    metadata:
+      labels:
+        app: portal-admin-pod
+        resourceName: admin
+        resourceType: portal
+    spec:
+      containers:
+      - env:
+        - name: APP_ID
+          value: 1947ec6e-1469-44be-a840-913d707c5edf
+        - name: APP_SIGNATURE
+          value: 43BGqM8XsH5wh0KNxtYOxCk--OqUQP6GL3Uc74KixiZNBdCEBtzRnZk9JBV8sp1kdXjip_MQlitDEK4p_4bPsldITXNDF_medbkIDtRksFdwwabPfD-UD7GXl8pauPTgUEKH8Kl7bNqSLnnQh2K5Jc2vnutYAtLHZ_Z2HqxZA4GQpghIAQq_KugQBbJyd8vEd0Uv3G9cESExKqIgRmzNot9B2S4Z8gNbfyXmZJW4Y5S1vVM1SyqfZcGO4JNRjA2
+        - name: CLIENT_ID
+          value: ru42942mkegxmz9ojci7g4r4
+        - name: AUTH_CLIENT_ID
+          value: aaeuku96e2spl372sp6ac9mk
+        - name: CLIENT_SECRET
+          value: TqbiFv7bzHRGNU8UyUIidwW3
+        - name: PAAS_SERVICE
+          value: 'true'
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              key: postgress-url
+              name: opolo-credentials
+        - name: REDIS_URL
+          value: 'redis://opolo-redis:6379'
+        - name: REDISCACHEHOSTNAME
+          value: 'opolo-redis'
+        - name: REDISCACHEPORT
+          value: '6379'       
+        - name: REDIS_TLS
+          value: 'false'
+        - name: RESTENDPOINT
+          value: https://mc63kdf7d4l9r0c3-0njhd1ss851.rest.marketingcloudapis.com
+        - name: HOSTENDPOINT
+          value: https://mc63kdf7d4l9r0c3-0njhd1ss851.auth.marketingcloudapis.com
+        - name: SOAPENDPOINT
+          value: https://mc63kdf7d4l9r0c3-0njhd1ss851.soap.marketingcloudapis.com
+        - name: AUTHORIZE_URL
+          value: https://mc63kdf7d4l9r0c3-0njhd1ss851.auth.marketingcloudapis.com/v2/authorize
+        - name: ACCOUNT_ID
+          value: '100030110'
+        - name: APP_URL
+          value: https://admin.prod.knowesissaas.com/
+        - name: APP_REDIRECT_URL
+          value: https://admin.prod.knowesissaas.com/redirect
+        - name: GW_DESIGN_URL
+          value: http://gateway-designtime:10040
+        - name: GW_RUNTIME_URL
+          value: http://gateway-runtime:10060
+        - name: ADMIN_SERVICE_URL
+          value: http://portal-admin:3000
+        - name: USE_JWT
+          value: 'false'
+        - name: ELASTICSEARCH_URL
+          value: http://sift-es:9200/
+        - name: ELASTICSEARCH_SIFT_LOGS_INDEX
+          value: opolo-admin
+        - name: APP_LOG_LEVEL
+          value: INFO
+        - name: GRANT_TYPE
+          value: client_credentials
+        - name: STACK
+          value: s10
+        - name: AUTH_VERSION
+          value: '2'
+        - name: DE_FOLDER
+          value: Opolo_DE
+        - name: LOG_TO_ELASTIC
+          value: 'false'
+        - name: LOG_PATH
+          value: /var/www/opolo-logs
+        - name: AUTH_KEY
+          value: opolo-admin
+        - name: TOKEN_VALID_TIME
+          value: '60'
+        - name: USE_AUTH
+          value: 'false'
+        - name: CANVAS_LENGTH
+          value: '10'
+        - name: DEFAULT_TIMEOUT
+          value: '60000'
+        - name: DEFAULT_DELAY
+          value: '10000'
+        - name: DEFAULT_RETRY_COUNT
+          value: '5'
+        - name: MOCK_SERVICE
+          value: 'false'
+        - name: MOCK_SERVICE_URL
+          value: https://admin.prod.knowesissaas.com
+        - name: KC_ISSUER
+          value: https://admin.prod.knowesissaas.com/auth
+        - name: IS_BETA_MODULES_ENABLED
+          value: 'true'
+        - name: KC_CLIENT_ID
+          value: opolo-activities
+        - name: KC_UI_CLIENT_ID
+          value: opolo-portal
+        - name: KC_CLIENT_SECRET
+          value: f03aeb04-04a3-4af2-904e-e6d43afefa18
+        - name: KC_SERVER_URL
+          value: https://admin.prod.knowesissaas.com/auth
+        - name: KC_BEARERONLY
+          value: 'false'
+        - name: KC_REALM
+          value: opolo
+        - name: VALIDATE_TIME
+          value: '2'
+        - name: REDIS_TTL
+          value: '120'
+        - name: SFMC_TOKEN_VALID_TIME
+          value: '960'
+        - name: PRODUCT_ID
+          value: OPOLO
+        - name: ACTIVITIES_TIMEOUT
+          value: '3000'
+        - name: ENABLE_DB_SYNC
+          value: 'true'
+        - name: EVENT_VERSION
+          value: 2.0.0
+        - name: EVENT_STEP1
+          value: Select Data Extension
+        - name: EVENT_STEP2
+          value: Select Event
+        - name: EVENT_STEP3
+          value: Configure Event
+        - name: EVENT_STEP4
+          value: Choose Location
+        - name: EVENT_STEP5
+          value: Event Summary
+        - name: POLICY_VERSION
+          value: 2.0.0
+        - name: POLICY_ATTRIBUTES
+          value: email,sms,global
+        - name: POLICY_STEP1
+          value: Choose Contact Policy
+        - name: POLICY_STEP2
+          value: Summary
+        - name: REAL_VERSION
+          value: 2.0.0
+        - name: REAL_TIMEOUT
+          value: '60000'
+        - name: REAL_DELAY
+          value: '10000'
+        - name: REAL_STEP1
+          value: Opolo Real Summary
+        - name: REGISTER_VERSION
+          value: 2.0.0
+        - name: OFFER_LENGTH
+          value: '10'
+        - name: REGISTER_STEP1
+          value: Choose Offer
+        - name: REGISTER_STEP2
+          value: Register Contact
+        - name: REGISTER_STEP3
+          value: Summary
+        - name: SEARCH_FIELDS
+          value: id,name,offerType,decisionBucket,category
+        - name: MANDATORY_INFO
+          value: Ask your administrator to complete configurations via portal to continue
+        - name: SMS_VERSION
+          value: 2.0.0
+        - name: SMS_STEP1
+          value: Construct Message
+        - name: SMS_STEP2
+          value: Summary
+        - name: SFMC_INTEGRATED
+          value: 'true'
+        - name: SFMC_SMS_API_INTEGRATED
+          value: 'true'
+        - name: KC_LOGOUT_URL
+          value: https://admin.prod.knowesissaas.com/
+        image: knowesis/opolo-admin:V6.0.3.25-DEV-MAAS
+        imagePullPolicy: Always
+        name: portal-admin
+        ports:
+        - containerPort: 3000
+        resources:
+          limits:
+            cpu: 100m
+            memory: 2G
+          requests:
+            cpu: 100m
+            memory: 512Mi
+        volumeMounts:
+        - mountPath: /opolo-admin/upload-images
+          name: my-volume
+      imagePullSecrets:
+      - name: regcred
+      volumes:
+        - name: my-volume
+          persistentVolumeClaim:
+            claimName: ebs-admin-pvc

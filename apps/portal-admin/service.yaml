@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: portal-admin-pod
+    resourceName: admin-svc
+    resourceType: portal
+  name: portal-admin
+spec:
+  type: ClusterIP
+  ports:
+  - port: 3000
+  selector:
+    app: portal-admin-pod
