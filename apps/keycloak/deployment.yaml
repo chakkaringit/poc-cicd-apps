@@ -28,6 +28,8 @@ spec:
         env:
         - name: PROXY_ADDRESS_FORWARDING
           value: 'true'
+        - name: KEYCLOAK_HOSTNAME
+          value: "keycloak.prod.quiinsfelicity.shop"
         - name: DB_VENDOR
           value: POSTGRES
         - name: DB_USER
