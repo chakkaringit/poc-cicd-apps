@@ -1,0 +1,104 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    resourceName: DATA_SOURCE_TEST_FRAMEWORK
+    resourceType: datasource
+  name: data-source-test-framework
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sift-datasource-data-source-test-framework
+  serviceName: sift-datasource-data-source-test-framework
+  template:
+    metadata:
+      labels:
+        app: sift-datasource-data-source-test-framework
+        resourceName: DATA_SOURCE_TEST_FRAMEWORK
+        resourceType: datasource
+    spec:
+      containers:
+      - name: sift-datasource-data-source-test-framework
+        image: chakkarinsom/sift-core:V7.5.1
+        imagePullPolicy: Always
+        env:
+        - name: TZ
+          value: "Asia/Bangkok"
+        - name: DS_NAME
+          value: DATA_SOURCE_TEST_FRAMEWORK
+        - name: PERSIST_ADDRESS
+          value: http://sift-persist:8091/pools
+        - name: LOG_LEVEL
+          value: info
+        - name: HEAP_SIZE
+          value: 150m
+        - name: JVM_PARAM
+          value: -XX:+UseConcMarkSweepGC
+        - name: ELASTICSEARCH_URL
+          value: http://elk-aws.uat.th.intranet:9200
+        - name: ELASTICSEARCH_SIFT_LOGS_INDEX
+          value: datasourcelogs
+        - name: CONTAINER_ID
+          value: DATA_SOURCE_PROFILE_API
+        - name: ELASTICSEARCH_SIFT_FILREPORT_INDEX
+          value: siftprocessingstats
+        - name: ELASTICSEARCH_SIFT_BADRECORDS_INDEX
+          value: siftbadrecords
+        - name: PERSIST_CLIENT
+          value: couchbase
+        - name: PERSIST_PASSWORD
+          value: None
+        - name: APP_LOG_LEVEL
+          value: INFO
+        - name: LOG_TYPE
+          value: file
+        - name: SLEEPTIME
+          value: '10'
+        resources:
+          limits:
+            cpu: '1'
+            memory: 500M
+          requests:
+            cpu: 100m
+            memory: 100M
+        volumeMounts:
+        - name: app-logs
+          mountPath: /home/siftuser/LOGS
+      - name: filebeat
+        image: docker.elastic.co/beats/filebeat:7.16.3
+        args: ["-e", "-c", "/etc/filebeat/filebeat.yml"]
+        env:
+          - name: ELASTICSEARCH_HOST
+            value: "sift-es"
+          - name: FILEBEAT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: opolo-credentials
+                key: filebeat
+          - name: SERVICE_NAME
+            value: "data-source-test-framework"
+          - name: LOG_PATH
+            value: "/home/siftuser/LOGS/sift*"
+        volumeMounts:
+        - name: app-logs
+          mountPath: /home/siftuser/LOGS
+        - name: filebeat-config
+          mountPath: /etc/filebeat
+          readOnly: true
+        readinessProbe:
+          exec:
+            command:
+              - /bin/sh
+              - -c
+              - ls /home/siftuser/LOGS/sift*.log > /dev/null 2>&1
+          initialDelaySeconds: 10
+          periodSeconds: 5
+      imagePullSecrets:
+      - name: regcred
+      volumes:
+      - name: app-logs
+        emptyDir: {}
+      - name: filebeat-config
+        configMap:
+          name: filebeat-ds-configs

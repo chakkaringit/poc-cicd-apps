@@ -1,3 +1,53 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: filebeat-ds-configs
+data:
+  filebeat.yml: |
+    filebeat.inputs:
+    - type: log
+      paths:
+        - ${LOG_PATH}.log
+      fields:
+        service_name: ${SERVICE_NAME}
+        log_type: logs
+      fields_under_root: true
+    - type: log
+      paths:
+        - ${LOG_PATH}_report.log
+      fields:
+        service_name: ${SERVICE_NAME}
+        log_type: report
+      fields_under_root: true
+
+    output.elasticsearch:
+      hosts: ["${ELASTICSEARCH_HOST}:9200"]
+      username: "filebeat_user"
+      password: "maas@888"
+      indices:
+        - index: "app-%{[log_type]}-%{+yyyy.MM.dd}"
+          when.equals:
+            log_type: logs
+        - index: "app-%{[log_type]}-%{+yyyy.MM.dd}"
+          when.equals:
+            log_type: report
+      setup.template.enabled: true
+      setup.template.overwrite: true
+      setup.template.name: "app-*"
+      setup.template.pattern: "app-*"
+      setup.template.settings:
+        index:
+          number_of_shards: 1
+          number_of_replicas: 1
+      ilm.enabled: false
+      setup.ilm.enabled: false
+    ilm.enabled: false
+    setup.ilm.enabled: false
+    ilm.policy_name: "null"
+    setup.template.name: "app-*"
+    setup.template.pattern: "app-*"
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
