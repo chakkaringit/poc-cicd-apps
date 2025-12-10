@@ -29,6 +29,8 @@ spec:
         env:
         - name: TYPE
           value: MASTER
+        - namr: START_MODE
+          value: NORMAL
         ports:
         - containerPort: 8091
         volumeMounts:
