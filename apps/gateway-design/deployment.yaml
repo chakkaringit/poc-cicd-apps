@@ -18,13 +18,13 @@ spec:
       - name: gateway-designtime
         image: knowesis/opolo-gw:6.0.3-dev-11112025
         imagePullPolicy: Always
-        resources:
-          requests:
-            cpu: 100m
-            memory: 2048Mi
-          limits:
-            cpu: 100m
-            memory: 4096Mi
+        #resources:
+        #  requests:
+        #    cpu: 100m
+        #    memory: 2048Mi
+        #  limits:
+        #    cpu: 100m
+        #    memory: 4096Mi
         env:
         - name: SFMC_API_IP
           value: sfmcapi
