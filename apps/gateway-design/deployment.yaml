@@ -6,7 +6,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-       app: gateway-designtime-pod
+      app: gateway-designtime-pod
   template:
     metadata:
       labels:
@@ -20,57 +20,57 @@ spec:
         imagePullPolicy: Always
         resources:
           requests:
-            cpu: 200m
-            memory: "2048Mi"
+            cpu: 100m
+            memory: 1024Mi
           limits:
-            cpu: 200m
-            memory: "2048Mi"
+            cpu: 100m
+            memory: 1024Mi
         env:
-          - name: SFMC_API_IP
-            value: "sfmcapi"
-          - name: SFMC_API_PORT
-            value: "8090"
-          - name: SIFT_API_TIMEOUT
-            value: "120000"
-          - name: POSTGRESQL_URL
-            value: "jdbc:postgresql://postgresql:5432/rtuEybxYChjmVYb"
-          - name: POSTGRESQL_USER
-            value: "opoloportaluser"
-          - name: POSTGRESQL_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: opolo-postgress
-                key: POSTGRESQL_PASSWORD
-          - name: POSTGRESQL_SCHEMA_NAME
-            value: "opolo"
-          - name: REDIS_CLUSTER_NODES
-            value: "redis-0.redis:6379,redis-1.redis:6379,redis-2.redis:6379"
-          - name: REDIS_HOST
-            value: "redis-0.redis,redis-1.redis,redis-2.redis"
-          - name: REDIS_PORT
-            value: "6379"
-          - name: REDIS_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: opolo-credentials
-                key: redis
-          - name: KAFKA_HOST
-            value: "siftqueue1"
-          - name: KAFKA_PORT
-            value: "9092"
-          - name: ELASTIC_SEARCH_URL
-            value: "http://sift-es:9200/_bulk"
-          - name: KEYCLOAK_REALM
-            value: "opolo"
-          - name: KEYCLOAK_RESOURCE
-            value: "opolo-gateway"
-          - name: KEYCLOAK_SERVER_URL
-            value: "http://keycloak:8080/auth"
-          - name: KEYCLOAK_ENABLE
-            value: "true"
-          - name: CMS_API_IP
-            value: "cmsapi"
-          - name: CMS_API_PORT
-            value: "8091"
+        - name: SFMC_API_IP
+          value: sfmcapi
+        - name: SFMC_API_PORT
+          value: '8090'
+        - name: SIFT_API_TIMEOUT
+          value: '120000'
+        - name: POSTGRESQL_URL
+          value: jdbc:postgresql://postgresql:5432/rtuEybxYChjmVYb
+        - name: POSTGRESQL_USER
+          value: opoloportaluser
+        - name: POSTGRESQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: opolo-postgress
+              key: POSTGRESQL_PASSWORD
+        - name: POSTGRESQL_SCHEMA_NAME
+          value: opolo
+        - name: REDIS_CLUSTER_NODES
+          value: redis-0.redis:6379,redis-1.redis:6379,redis-2.redis:6379
+        - name: REDIS_HOST
+          value: redis-0.redis,redis-1.redis,redis-2.redis
+        - name: REDIS_PORT
+          value: '6379'
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: opolo-credentials
+              key: redis
+        - name: KAFKA_HOST
+          value: siftqueue1
+        - name: KAFKA_PORT
+          value: '9092'
+        - name: ELASTIC_SEARCH_URL
+          value: http://sift-es:9200/_bulk
+        - name: KEYCLOAK_REALM
+          value: opolo
+        - name: KEYCLOAK_RESOURCE
+          value: opolo-gateway
+        - name: KEYCLOAK_SERVER_URL
+          value: http://keycloak:8080/auth
+        - name: KEYCLOAK_ENABLE
+          value: 'true'
+        - name: CMS_API_IP
+          value: cmsapi
+        - name: CMS_API_PORT
+          value: '8091'
         ports:
         - containerPort: 10040

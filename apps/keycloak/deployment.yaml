@@ -20,37 +20,37 @@ spec:
         imagePullPolicy: Always
         resources:
           requests:
-            cpu: 300m
-            memory: "2048Mi"
+            cpu: 100m
+            memory: 512Mi
           limits:
-            cpu: 300m
-            memory: "2048Mi"
+            cpu: 100m
+            memory: 512Mi
         env:
-          - name: PROXY_ADDRESS_FORWARDING
-            value: "true"
-          - name: DB_VENDOR
-            value: "POSTGRES"
-          - name: DB_USER
-            value: "keycloak"
-          - name: DB_DATABASE
-            value: "keycloak"
-          - name: DB_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: opolo-credentials
-                key: keycloak-db
-          - name: DB_ADDR
-            value: "postgresql:5432"
-          - name: DB_SCHEMA
-            value: "public"
-          - name: KEYCLOAK_USER
-            value: "admin"
-          - name:  KEYCLOAK_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: opolo-credentials
-                key: keycloak-admin
-          - name: JAVA_OPTS_APPEND
-            value: "-Dkeycloak.profile.feature.token_exchange=enabled"
+        - name: PROXY_ADDRESS_FORWARDING
+          value: 'true'
+        - name: DB_VENDOR
+          value: POSTGRES
+        - name: DB_USER
+          value: keycloak
+        - name: DB_DATABASE
+          value: keycloak
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: opolo-credentials
+              key: keycloak-db
+        - name: DB_ADDR
+          value: postgresql:5432
+        - name: DB_SCHEMA
+          value: public
+        - name: KEYCLOAK_USER
+          value: admin
+        - name: KEYCLOAK_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: opolo-credentials
+              key: keycloak-admin
+        - name: JAVA_OPTS_APPEND
+          value: -Dkeycloak.profile.feature.token_exchange=enabled
         ports:
         - containerPort: 8080

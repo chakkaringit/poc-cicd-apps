@@ -20,95 +20,91 @@ spec:
         imagePullPolicy: Always
         resources:
           requests:
-            cpu: 200m
+            cpu: 100m
             memory: 1024Mi
           limits:
-            cpu: 300m
-            memory: 2048Mi
+            cpu: 100m
+            memory: 1024Mi
         env:
-          - name: ELASTIC_SEARCH_URL
-            value: "http://sift-es:9200"
-          - name: KEYCLOAK_SECURITY_ENABLE
-            value: "true"
-          - name: KEYCLOAK_URL
-            value: "http://keycloak:8080/auth"
-          - name: KEYCLOAK_CREDENTIALS
-            value: "004dfa89-6522-44da-a057-df64d5603a4e"
-          - name: KEYCLOAK_REALM
-            value: "opolo"
-          - name: ISBUENABLED
-            value: "true"
-          - name: ELASTIC_LOG_TYPE
-            value: "file"
-          - name: KEYCLOAKUSERNAME
-            value: "admin"
-          - name: KEYCLOAKPASSWORD
-            #valueFrom:
-            #  secretKeyRef:
-            #    name: opolo-credentials
-            #    key: portal-admin
-            value: "sift@123"
-          - name: FEDERATEDUSERS
-            value: "false"
-          - name: MAIL_HOST
-            value: ""
-          - name: MAIL_PORT
-            value: "1"
-          - name: MAIL_USERNAME
-            value: ""
-          - name: MAIL_PASSWORD
-            value: ""
-          - name: SMTP_MAIL_SMTP_AUTH
-            value: ""
-          - name: SMTP_TARTTLS_ENABLE
-            value: ""
-          - name: NOTIFICATION_EMAIL_ENABLED
-            value: "false"
-          - name: NOTIFICATION_EMAIL_FROM_ADDRESS
-            value: ""
-          - name: PORTAL_URL
-            value: ""
-          - name: PERSISTENCE_API_ADDR
-            value: "persistence-api:10080"
-          - name: SIFT_MANAGE_API_ADDR
-            value: "siftmanage-svc:8042"
-          - name: OFFER_CONTENT_API_ADDR
-            value: "localhost:8888"
-          - name: OFFER_CONTENT_AUTHORIZATION
-            value: "Basic "
-          - name: CONFIG_PERSIST_CLIENT
-            value: "couchbase"
-          - name: DEFAULT_COUCHBASE_BUCKET
-            value: "default"
-          - name: CONFIG_COUCHBASE_BUCKET
-            value: "config"
-          - name: DEFAULT_COUCHBASE_PASSWORD
-            value: "sift123"
-          - name: CONFIG_COUCHBASE_PASSWORD
-            value: "sift123"
-          - name: DEFAULT_COUCHBASE_IP
-            value: "sift-persist"
-          - name: CONFIG_COUCHBASE_IP
-            value: "sift-persist"
-          - name: aws_s3_bucket
-            value: "cms-data-050752618140-ap-southeast-1"
-          - name: aws_region
-            value: "ap-southeast-1"
-          - name: aws_accId
-            value: "050752618140"
-          - name: aws_queue
-            value: "cms-upload-events"
-          - name: aws_access_key
-            value: ""
-          - name: aws_secret_access_key
-            value: ""
-          - name: clientId
-            value: "P5"
-          - name: CorePoolSize
-            value: "20"
-          - name: MaxPoolSize
-            value: "100"
-          - name: QueueCapacity
-            value: "600"
+        - name: ELASTIC_SEARCH_URL
+          value: http://sift-es:9200
+        - name: KEYCLOAK_SECURITY_ENABLE
+          value: 'true'
+        - name: KEYCLOAK_URL
+          value: http://keycloak:8080/auth
+        - name: KEYCLOAK_CREDENTIALS
+          value: 004dfa89-6522-44da-a057-df64d5603a4e
+        - name: KEYCLOAK_REALM
+          value: opolo
+        - name: ISBUENABLED
+          value: 'true'
+        - name: ELASTIC_LOG_TYPE
+          value: file
+        - name: KEYCLOAKUSERNAME
+          value: admin
+        - name: KEYCLOAKPASSWORD
+          value: sift@123
+        - name: FEDERATEDUSERS
+          value: 'false'
+        - name: MAIL_HOST
+          value: ''
+        - name: MAIL_PORT
+          value: '1'
+        - name: MAIL_USERNAME
+          value: ''
+        - name: MAIL_PASSWORD
+          value: ''
+        - name: SMTP_MAIL_SMTP_AUTH
+          value: ''
+        - name: SMTP_TARTTLS_ENABLE
+          value: ''
+        - name: NOTIFICATION_EMAIL_ENABLED
+          value: 'false'
+        - name: NOTIFICATION_EMAIL_FROM_ADDRESS
+          value: ''
+        - name: PORTAL_URL
+          value: ''
+        - name: PERSISTENCE_API_ADDR
+          value: persistence-api:10080
+        - name: SIFT_MANAGE_API_ADDR
+          value: siftmanage-svc:8042
+        - name: OFFER_CONTENT_API_ADDR
+          value: localhost:8888
+        - name: OFFER_CONTENT_AUTHORIZATION
+          value: 'Basic '
+        - name: CONFIG_PERSIST_CLIENT
+          value: couchbase
+        - name: DEFAULT_COUCHBASE_BUCKET
+          value: default
+        - name: CONFIG_COUCHBASE_BUCKET
+          value: config
+        - name: DEFAULT_COUCHBASE_PASSWORD
+          value: sift123
+        - name: CONFIG_COUCHBASE_PASSWORD
+          value: sift123
+        - name: DEFAULT_COUCHBASE_IP
+          value: sift-persist
+        - name: CONFIG_COUCHBASE_IP
+          value: sift-persist
+        - name: aws_s3_bucket
+          value: cms-data-050752618140-ap-southeast-1
+        - name: aws_region
+          value: ap-southeast-1
+        - name: aws_accId
+          value: 050752618140
+        - name: aws_queue
+          value: cms-upload-events
+        - name: aws_access_key
+          value: ''
+        - name: aws_secret_access_key
+          value: ''
+        - name: clientId
+          value: P5
+        - name: CorePoolSize
+          value: '20'
+        - name: MaxPoolSize
+          value: '100'
+        - name: QueueCapacity
+          value: '600'
         ports:
         - containerPort: 8090

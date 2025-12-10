@@ -37,11 +37,11 @@ spec:
               key: postgress-url
               name: opolo-credentials
         - name: REDIS_URL
-          value: 'redis://opolo-redis:6379'
+          value: redis://opolo-redis:6379
         - name: REDISCACHEHOSTNAME
-          value: 'opolo-redis'
+          value: opolo-redis
         - name: REDISCACHEPORT
-          value: '6379'       
+          value: '6379'
         - name: REDIS_TLS
           value: 'false'
         - name: RESTENDPOINT
@@ -192,7 +192,7 @@ spec:
         resources:
           limits:
             cpu: 100m
-            memory: 2G
+            memory: 512Mi
           requests:
             cpu: 100m
             memory: 512Mi
@@ -202,6 +202,6 @@ spec:
       imagePullSecrets:
       - name: regcred
       volumes:
-        - name: my-volume
-          persistentVolumeClaim:
-            claimName: ebs-admin-pvc
+      - name: my-volume
+        persistentVolumeClaim:
+          claimName: ebs-admin-pvc
