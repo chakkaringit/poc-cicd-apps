@@ -78,11 +78,16 @@ spec:
         - containerPort: 9300
         env:
         - name: xpack.security.enabled
-          value: "false"
+          value: "true"
         - name: discovery.type
           value: "single-node"
         - name: ES_JAVA_OPTS
           value: "-Xms2G -Xmx4G"
+        - name: ELASTIC_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: opolo-credentials
+              key: filebeat
         resources:
           requests:
             memory: "2Gi"

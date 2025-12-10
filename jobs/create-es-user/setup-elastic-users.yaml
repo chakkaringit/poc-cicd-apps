@@ -1,0 +1,112 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: setup-elastic-complete-
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+spec:
+  template:
+    spec:
+      containers:
+      - name: setup-elastic
+        image: curlimages/curl:latest
+        env:
+          - name: ELASTIC_URL
+            value: "http://sift-es:9200"       
+          - name: ADMIN_USER
+            value: "elastic"
+          - name: ELASTIC_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: eopolo-credentials
+                key: filebeat
+          - name: KIBANA_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: opolo-credentials
+                key: filebeat
+
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            echo "⏳ Waiting for Elasticsearch..."
+            until curl -s -u "$ADMIN_USER:$ELASTIC_PASSWORD" "$ELASTIC_URL/_cluster/health" | grep -q '"status":"green"\|"status":"yellow"'; do
+              echo "Still waiting..."
+              sleep 5
+            done
+            echo "✅ Elasticsearch is Ready!"
+
+            # ---------------------------------------------------------
+            # 1. [NEW] Set Password for kibana_system
+            # ---------------------------------------------------------
+            echo "🔐 Setting password for kibana_system..."
+            curl -X POST "$ELASTIC_URL/_security/user/kibana_system/_password" \
+              -u "$ADMIN_USER:$ELASTIC_PASSWORD" \
+              -H 'Content-Type: application/json' \
+              -d "{ \"password\": \"$KIBANA_PASSWORD\" }"
+            echo "" # Newline
+
+            # ---------------------------------------------------------
+            # 2. Create Role: filebeat_monitor
+            # ---------------------------------------------------------
+            echo "🛠️ Creating role: filebeat_monitor..."
+            curl -X POST "$ELASTIC_URL/_security/role/filebeat_monitor" \
+              -u "$ADMIN_USER:$ELASTIC_PASSWORD" \
+              -H 'Content-Type: application/json' \
+              -d '{
+                "cluster": ["monitor"],
+                "indices": [
+                  {
+                    "names": ["filebeat-*"],
+                    "privileges": ["read", "write", "create_index"]
+                  }
+                ]
+              }'
+            echo ""
+
+            # ---------------------------------------------------------
+            # 3. Create Role: filebeat_template_manager (รวมทุก Indices)
+            # ---------------------------------------------------------
+            echo "🛠️ Creating role: filebeat_template_manager..."
+            curl -X POST "$ELASTIC_URL/_security/role/filebeat_template_manager" \
+              -u "$ADMIN_USER:$ELASTIC_PASSWORD" \
+              -H 'Content-Type: application/json' \
+              -d '{
+                "cluster": ["monitor", "manage_index_templates"],
+                "indices": [
+                  {
+                    "names": ["filebeat-*"],
+                    "privileges": ["read", "write", "create_index"]
+                  },
+                  {
+                    "names": ["app-logs-*", "app-*"],
+                    "privileges": ["read", "write", "create_index", "auto_configure"]
+                  }
+                ]
+              }'
+            echo ""
+
+            # ---------------------------------------------------------
+            # 4. Create User: filebeat_user (Assign Roles)
+            # ---------------------------------------------------------
+            echo "👤 Creating user: filebeat_user..."
+            curl -X POST "$ELASTIC_URL/_security/user/filebeat_user" \
+              -u "$ADMIN_USER:$ELASTIC_PASSWORD" \
+              -H 'Content-Type: application/json' \
+              -d '{
+                "password": $ELASTIC_PASSWORD,
+                "roles": [
+                  "ingest", 
+                  "kibana_user", 
+                  "filebeat_monitor", 
+                  "filebeat_template_manager"
+                ],
+                "full_name": "Filebeat User",
+                "email": "filebeat@example.com"
+              }'
+            echo ""
+
+            echo "🎉 All configuration completed successfully!"
+      
+      restartPolicy: Never
