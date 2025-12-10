@@ -17,7 +17,7 @@ spec:
       - name: regcred
       containers:
       - name: sift-persist
-        image: knowesis/persist:4.5.0-K8
+        image: chakkarinsom/persist:4.5.0-K8
         imagePullPolicy: Always
         resources:
           requests:
