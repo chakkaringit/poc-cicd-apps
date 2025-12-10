@@ -57,10 +57,10 @@ spec:
           value: '10'
         resources:
           limits:
-            cpu: 100m
+            cpu: 200m
             memory: 512Mi
           requests:
-            cpu: 200m
+            cpu: 100m
             memory: 512Mi
         volumeMounts:
         - name: app-logs
