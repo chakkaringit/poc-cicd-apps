@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sift-keycloak-ingress
+  namespace: opolo
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  - host: keycloak.prod.quiinsfelicity.shop
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: keycloak
+            port:
+              number: 8080
