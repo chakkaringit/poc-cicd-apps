@@ -55,9 +55,9 @@ spec:
         - name: ACCOUNT_ID
           value: '100030110'
         - name: APP_URL
-          value: https://admin.prod.knowesissaas.com/
+          value: https://admin.prod.quiinsfelicity.shop/
         - name: APP_REDIRECT_URL
-          value: https://admin.prod.knowesissaas.com/redirect
+          value: https://admin.prod.quiinsfelicity.shop/redirect
         - name: GW_DESIGN_URL
           value: http://gateway-designtime:10040
         - name: GW_RUNTIME_URL
@@ -101,9 +101,9 @@ spec:
         - name: MOCK_SERVICE
           value: 'false'
         - name: MOCK_SERVICE_URL
-          value: https://admin.prod.knowesissaas.com
+          value: https://admin.prod.quiinsfelicity.shop
         - name: KC_ISSUER
-          value: https://admin.prod.knowesissaas.com/auth
+          value: https://admin.prod.quiinsfelicity.shop/auth
         - name: IS_BETA_MODULES_ENABLED
           value: 'true'
         - name: KC_CLIENT_ID
@@ -113,7 +113,7 @@ spec:
         - name: KC_CLIENT_SECRET
           value: f03aeb04-04a3-4af2-904e-e6d43afefa18
         - name: KC_SERVER_URL
-          value: https://admin.prod.knowesissaas.com/auth
+          value: https://admin.prod.quiinsfelicity.shop/auth
         - name: KC_BEARERONLY
           value: 'false'
         - name: KC_REALM
@@ -183,7 +183,7 @@ spec:
         - name: SFMC_SMS_API_INTEGRATED
           value: 'true'
         - name: KC_LOGOUT_URL
-          value: https://admin.prod.knowesissaas.com/
+          value: https://admin.prod.quiinsfelicity.shop/
         image: knowesis/opolo-admin:V6.0.3.25-DEV-MAAS
         imagePullPolicy: Always
         name: portal-admin
