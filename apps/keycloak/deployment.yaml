@@ -30,6 +30,8 @@ spec:
           value: 'true'
         - name: KEYCLOAK_HOSTNAME
           value: "keycloak.prod.quiinsfelicity.shop"
+        - name: KEYCLOAK_FRONTEND_URL
+          value: "https://keycloak.prod.quiinsfelicity.shop/auth"
         - name: DB_VENDOR
           value: POSTGRES
         - name: DB_USER
