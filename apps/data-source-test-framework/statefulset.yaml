@@ -34,7 +34,7 @@ spec:
         - name: HEAP_SIZE
           value: 150m
         - name: JVM_PARAM
-          value: -XX:+UseConcMarkSweepGC
+          value: ""
         - name: ELASTICSEARCH_URL
           value: http://elk-aws.uat.th.intranet:9200
         - name: ELASTICSEARCH_SIFT_LOGS_INDEX
