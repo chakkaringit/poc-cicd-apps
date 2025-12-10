@@ -30,10 +30,10 @@ spec:
       labels:
         app: postgres-pod
     spec:
-      securityContext:
-        fsGroup: 1000
-        runAsUser: 1000
-        runAsGroup: 1000
+      #securityContext:
+      #  fsGroup: 1000
+      #  runAsUser: 1000
+      #  runAsGroup: 1000
       imagePullSecrets:
       - name: regcred
       hostname: postgresql
@@ -54,14 +54,14 @@ spec:
           value: localhost:8080
         - name: OPOLO_ADMIN_IPANDPORT
           value: localhost:3000
-        - name: PGDATA
-          value: /var/lib/postgresql/data1
+        #- name: PGDATA
+        #  value: /var/lib/postgresql/data1
         ports:
         - containerPort: 5432
           name: postgresql
-        volumeMounts:
-        - mountPath: /var/lib/postgresql
-          name: my-volume
+        #volumeMounts:
+        #- mountPath: /var/lib/postgresql
+        #  name: my-volume
         resources:
           requests:
             memory: 256Mi
@@ -69,7 +69,7 @@ spec:
           limits:
             memory: 256Mi
             cpu: 100m
-      volumes:
-      - name: my-volume
-        persistentVolumeClaim:
-          claimName: ebs-postgres-pvc
+      #volumes:
+      #- name: my-volume
+      #  persistentVolumeClaim:
+      #    claimName: ebs-postgres-pvc
