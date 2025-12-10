@@ -24,7 +24,7 @@ spec:
             memory: 2048Mi
           limits:
             cpu: 100m
-            memory: 2048Mi
+            memory: 4096Mi
         env:
         - name: SFMC_API_IP
           value: sfmcapi
