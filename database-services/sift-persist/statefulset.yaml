@@ -30,7 +30,7 @@ spec:
         - name: TYPE
           value: MASTER
         - name: START_MODE
-          value: NORMAL
+          value: INIT
         ports:
         - containerPort: 8091
         volumeMounts:
