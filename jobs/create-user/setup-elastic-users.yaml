@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  generateName: setup-elastic-complete-
+  name: setup-elastic-user-manual-run
   annotations:
     #argocd.argoproj.io/hook: PostSync
     #argocd.argoproj.io/hook-delete-policy: HookSucceeded
