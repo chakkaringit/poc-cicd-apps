@@ -35,6 +35,7 @@ spec:
       hostname: postgresql
       containers:
       - image: chakkarinsom/siftmanage:postgres
+        imagePullPolicy: Always
         name: postgresql
         env:
         - name: POSTGRES_USER
