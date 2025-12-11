@@ -47,11 +47,11 @@ spec:
               name: opolo-credentials
               key: postgress-db
         - name: KEYCLOCK_IPANDPORT
-          value: localhost:8080
+          value: https://admin.prod.quiinsfelicity.shop
         - name: OPOLO_ADMIN_IPANDPORT
-          value: admin.prod.quiinsfelicity.shop
+          value: https://admin.prod.quiinsfelicity.shop
         - name: DOMAIN_NAME
-          value: admin.prod.quiinsfelicity.shop
+          value: https://admin.prod.quiinsfelicity.shop
         ports:
         - containerPort: 5432
           name: postgresql
