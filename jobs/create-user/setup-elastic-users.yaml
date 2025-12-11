@@ -94,17 +94,18 @@ spec:
             curl -X POST "$ELASTIC_URL/_security/user/filebeat_user" \
               -u "$ADMIN_USER:$ELASTIC_PASSWORD" \
               -H 'Content-Type: application/json' \
-              -d '{
-                "password": "$ELASTIC_PASSWORD",
-                "roles": [
-                  "ingest", 
-                  "kibana_user", 
-                  "filebeat_monitor", 
-                  "filebeat_template_manager"
+              -d "{
+                \"password\": \"$ELASTIC_PASSWORD\",
+                \"roles\": [
+                  \"ingest\", 
+                  \"kibana_user\", 
+                  \"filebeat_monitor\", 
+                  \"filebeat_template_manager\"
                 ],
-                "full_name": "Filebeat User",
-                "email": "filebeat@example.com"
-              }'
+                \"full_name\": \"Filebeat User\",
+                \"email\": \"filebeat@example.com\"
+              }"
+
             echo ""
 
             echo "🎉 All configuration completed successfully!"
