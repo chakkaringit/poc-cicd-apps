@@ -95,7 +95,7 @@ spec:
               -u "$ADMIN_USER:$ELASTIC_PASSWORD" \
               -H 'Content-Type: application/json' \
               -d '{
-                "password": $ELASTIC_PASSWORD,
+                "password": "$ELASTIC_PASSWORD",
                 "roles": [
                   "ingest", 
                   "kibana_user", 
