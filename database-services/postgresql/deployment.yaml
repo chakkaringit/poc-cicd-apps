@@ -34,7 +34,7 @@ spec:
       - name: regcred
       hostname: postgresql
       containers:
-      - image: knowesis/siftmanage:postgres
+      - image: chakkarinsom/siftmanage:postgres
         name: postgresql
         env:
         - name: POSTGRES_USER
@@ -50,6 +50,8 @@ spec:
           value: localhost:8080
         - name: OPOLO_ADMIN_IPANDPORT
           value: localhost:3000
+        - name: DOMAIN_NAME
+          value: admin.prod.quiinsfelicity.shop
         ports:
         - containerPort: 5432
           name: postgresql
