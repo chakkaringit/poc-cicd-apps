@@ -31,6 +31,10 @@ spec:
         args:
           - |
             echo "⏳ Waiting for Elasticsearch..."
+            echo "=== $ADMIN_USER ==="
+            echo "=== $ELASTIC_PASSWORD ==="
+            echo "=== $ELASTIC_URL ==="
+
             #curl -s -u "$ADMIN_USER:$ELASTIC_PASSWORD" "$ELASTIC_URL/_cluster/health" | grep  '"status":"green"\|"status":"yellow"'
 
             #until curl -s -u "$ADMIN_USER:$ELASTIC_PASSWORD" "$ELASTIC_URL/_cluster/health" | grep -q '"status":"green"\|"status":"yellow"'; do
