@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: sift-persist
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   project: default
   source:
@@ -25,6 +27,8 @@ kind: Application
 metadata:
   name: postgresql
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   project: default
   source:
@@ -47,6 +51,8 @@ kind: Application
 metadata:
   name: opolo-redis
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
 spec:
   project: default
   source:
@@ -69,6 +75,8 @@ kind: Application
 metadata:
   name: sift-registry
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
 spec:
   project: default
   source:
@@ -91,6 +99,8 @@ kind: Application
 metadata:
   name: sift-queue
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
 spec:
   project: default
   source:
@@ -113,6 +123,8 @@ kind: Application
 metadata:
   name: sift-es
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "6"
 spec:
   project: default
   source:
@@ -135,6 +147,8 @@ kind: ApplicationSet
 metadata:
   name: all-services
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "8"
 spec:
   generators:
   - git:
@@ -167,6 +181,8 @@ kind: Application
 metadata:
   name: create-user
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "7"
 spec:
   project: default
   source:
