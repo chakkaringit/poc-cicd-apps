@@ -34,7 +34,7 @@ spec:
       - name: regcred
       hostname: postgresql
       containers:
-      - image: chakkarinsom/siftmanage:postgres-1
+      - image: chakkarinsom/siftmanage:postgres
         imagePullPolicy: Always
         name: postgresql
         env:
