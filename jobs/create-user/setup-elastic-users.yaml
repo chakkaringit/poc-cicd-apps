@@ -17,15 +17,9 @@ spec:
           - name: ADMIN_USER
             value: "elastic"
           - name: ELASTIC_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: opolo-credentials
-                key: filebeat
+            value: "maas@888"
           - name: KIBANA_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: opolo-credentials
-                key: filebeat
+            value: "maas@888"
 
         command: ["/bin/sh", "-c"]
         args:
@@ -35,12 +29,12 @@ spec:
             echo "=== $ELASTIC_PASSWORD ==="
             echo "=== $ELASTIC_URL ==="
 
-            #curl -s -u "$ADMIN_USER:$ELASTIC_PASSWORD" "$ELASTIC_URL/_cluster/health" | grep  '"status":"green"\|"status":"yellow"'
+            curl -s -u "$ADMIN_USER:$ELASTIC_PASSWORD" "$ELASTIC_URL/_cluster/health" | grep  '"status":"green"\|"status":"yellow"'
 
-            #until curl -s -u "$ADMIN_USER:$ELASTIC_PASSWORD" "$ELASTIC_URL/_cluster/health" | grep -q '"status":"green"\|"status":"yellow"'; do
-            #  echo "Still waiting..."
-            #  sleep 5
-            #done
+            until curl -s -u "$ADMIN_USER:$ELASTIC_PASSWORD" "$ELASTIC_URL/_cluster/health" | grep -q '"status":"green"\|"status":"yellow"'; do
+              echo "Still waiting..."
+              sleep 5
+            done
             echo "✅ Elasticsearch is Ready!"
 
             # ---------------------------------------------------------
