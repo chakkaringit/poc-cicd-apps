@@ -95,9 +95,12 @@ spec:
             - name: aws_queue
               value: "cms-upload-events"
             - name: aws_access_key
-              value: ""
+              value: "AKIAQXUIXP2OEPD2DZRR"
             - name: aws_secret_access_key
-              value: ""
+              valueFrom:
+                secretKeyRef:
+                  name: opolo-credentials
+                  key: aws-secret
             - name: clientId
               value: "P5"
             - name: CorePoolSize
