@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cmsapi
+spec:
+  template:
+    spec:
+      containers:
+        - name: cmsapi
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "2048Mi"
+            limits:
+              cpu: "200m"
+              memory: "2048Mi"
