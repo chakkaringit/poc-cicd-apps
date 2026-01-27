@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   source:
-    path: database-services/sift-persist
+    path: database-services/sift-persist/overlays/${TIER_OVERLAY}
     repoURL: https://github.com/chakkaringit/poc-cicd-apps
     targetRevision: main
   destination:
@@ -32,7 +32,7 @@ metadata:
 spec:
   project: default
   source:
-    path: database-services/postgresql
+    path: database-services/postgresql/overlays/${TIER_OVERLAY}
     repoURL: https://github.com/chakkaringit/poc-cicd-apps
     targetRevision: main
   destination:
@@ -56,7 +56,7 @@ metadata:
 spec:
   project: default
   source:
-    path: database-services/opolo-redis
+    path: database-services/opolo-redis/overlays/${TIER_OVERLAY}
     repoURL: https://github.com/chakkaringit/poc-cicd-apps
     targetRevision: main
   destination:
@@ -80,7 +80,7 @@ metadata:
 spec:
   project: default
   source:
-    path: database-services/sift-registry
+    path: database-services/sift-registry/overlays/${TIER_OVERLAY}
     repoURL: https://github.com/chakkaringit/poc-cicd-apps
     targetRevision: main
   destination:
@@ -104,7 +104,7 @@ metadata:
 spec:
   project: default
   source:
-    path: database-services/sift-queue
+    path: database-services/sift-queue/overlays/${TIER_OVERLAY}
     repoURL: https://github.com/chakkaringit/poc-cicd-apps
     targetRevision: main
   destination:
@@ -128,7 +128,7 @@ metadata:
 spec:
   project: default
   source:
-    path: database-services/sift-es
+    path: database-services/sift-es/overlays/${TIER_OVERLAY}
     repoURL: https://github.com/chakkaringit/poc-cicd-apps
     targetRevision: main
   destination:

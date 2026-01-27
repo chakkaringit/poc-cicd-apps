@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ebs-postgres-pvc
+  namespace: opolo
+spec:
+  resources:
+    requests:
+      storage: 5Gi

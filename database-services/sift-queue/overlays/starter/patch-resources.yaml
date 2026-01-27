@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: siftqueue1
+spec:
+  template:
+    spec:
+      containers:
+      - name: siftqueue1
+        resources:
+          requests:
+            cpu: 200m
+            memory: 1500Mi
+          limits:
+            cpu: 200m
+            memory: 1500Mi
+  volumeClaimTemplates:
+  - metadata:
+      name: pv-siftqueue1
+    spec:
+      resources:
+        requests:
+          storage: 5Gi
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: siftqueue2
+spec:
+  template:
+    spec:
+      containers:
+      - name: siftqueue2
+        resources:
+          requests:
+            cpu: 200m
+            memory: 1500Mi
+          limits:
+            cpu: 200m
+            memory: 1500Mi
+  volumeClaimTemplates:
+  - metadata:
+      name: pv-siftqueue2
+    spec:
+      resources:
+        requests:
+          storage: 5Gi
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: siftqueue3
+spec:
+  template:
+    spec:
+      containers:
+      - name: siftqueue3
+        resources:
+          requests:
+            cpu: 200m
+            memory: 1500Mi
+          limits:
+            cpu: 200m
+            memory: 1500Mi
+  volumeClaimTemplates:
+  - metadata:
+      name: pv-siftqueue3
+    spec:
+      resources:
+        requests:
+          storage: 5Gi

@@ -1,0 +1,53 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: registry1
+spec:
+  template:
+    spec:
+      containers:
+      - name: registry1
+        resources:
+          requests:
+            cpu: 50m
+            memory: 256Mi
+          limits:
+            cpu: 50m
+            memory: 256Mi
+        
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: registry2
+spec:
+  template:
+    spec:
+      containers:
+      - name: registry2
+        resources:
+          requests:
+            cpu: 50m
+            memory: 256Mi
+          limits:
+            cpu: 50m
+            memory: 256Mi
+        
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: registry3
+spec:
+  template:
+    spec:
+      containers:
+      - name: registry3
+        resources:
+          requests:
+            cpu: 50m
+            memory: 256Mi
+          limits:
+            cpu: 50m
+            memory: 256Mi
+        
