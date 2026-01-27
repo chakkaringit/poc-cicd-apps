@@ -18,6 +18,8 @@ spec:
   - metadata:
       name: pv-siftqueue1
     spec:
+      accessModes:
+      - ReadWriteOnce
       resources:
         requests:
           storage: 5Gi
@@ -43,6 +45,8 @@ spec:
   - metadata:
       name: pv-siftqueue2
     spec:
+      accessModes:
+      - ReadWriteOnce
       resources:
         requests:
           storage: 5Gi
@@ -68,6 +72,8 @@ spec:
   - metadata:
       name: pv-siftqueue3
     spec:
+      accessModes:
+      - ReadWriteOnce
       resources:
         requests:
           storage: 5Gi
