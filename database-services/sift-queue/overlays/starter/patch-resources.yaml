@@ -23,6 +23,7 @@ spec:
       resources:
         requests:
           storage: 5Gi
+      storageClassName: efs-sc
 
 ---
 apiVersion: apps/v1
@@ -50,6 +51,7 @@ spec:
       resources:
         requests:
           storage: 5Gi
+      storageClassName: efs-sc
 
 ---
 apiVersion: apps/v1
@@ -77,3 +79,4 @@ spec:
       resources:
         requests:
           storage: 5Gi
+      storageClassName: efs-sc
