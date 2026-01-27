@@ -10,20 +10,10 @@ spec:
         resources:
           requests:
             cpu: 200m
-            memory: 1500Mi
+            memory: 512Mi
           limits:
             cpu: 200m
             memory: 1500Mi
-  volumeClaimTemplates:
-  - metadata:
-      name: pv-siftqueue1
-    spec:
-      accessModes:
-      - ReadWriteOnce
-      resources:
-        requests:
-          storage: 5Gi
-      storageClassName: efs-sc
 
 ---
 apiVersion: apps/v1
@@ -38,20 +28,10 @@ spec:
         resources:
           requests:
             cpu: 200m
-            memory: 1500Mi
+            memory: 512Mi
           limits:
             cpu: 200m
             memory: 1500Mi
-  volumeClaimTemplates:
-  - metadata:
-      name: pv-siftqueue2
-    spec:
-      accessModes:
-      - ReadWriteOnce
-      resources:
-        requests:
-          storage: 5Gi
-      storageClassName: efs-sc
 
 ---
 apiVersion: apps/v1
@@ -66,17 +46,7 @@ spec:
         resources:
           requests:
             cpu: 200m
-            memory: 1500Mi
+            memory: 512Mi
           limits:
             cpu: 200m
             memory: 1500Mi
-  volumeClaimTemplates:
-  - metadata:
-      name: pv-siftqueue3
-    spec:
-      accessModes:
-      - ReadWriteOnce
-      resources:
-        requests:
-          storage: 5Gi
-      storageClassName: efs-sc
