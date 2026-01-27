@@ -36,6 +36,15 @@ spec:
         volumeMounts:
         - mountPath: /opt/couchbase/var
           name: data-volume
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - isOpen=`netstat -ant | grep 8091 | wc -l | awk '{print $1}'`;if [ $isOpen
+              -lt 1 ]; then return 1; else echo "Found"; fi
+          initialDelaySeconds: 300
+          periodSeconds: 60
       volumes:
       - name: data-volume
         persistentVolumeClaim:
