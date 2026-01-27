@@ -39,8 +39,8 @@ spec:
         - name: POSTGRESQL_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: opolo-postgress
-              key: POSTGRESQL_PASSWORD
+              name: opolo-credentials
+              key: postgress-db
         - name: POSTGRESQL_SCHEMA_NAME
           value: opolo
         - name: REDIS_CLUSTER_NODES
