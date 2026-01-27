@@ -164,7 +164,7 @@ spec:
       source:
         repoURL: https://github.com/chakkaringit/poc-cicd-apps
         targetRevision: main
-        path: '{{path}}'
+        path: '{{path}}/overlays/${TIER_OVERLAY}'
       destination:
         server: https://kubernetes.default.svc
         namespace: opolo
