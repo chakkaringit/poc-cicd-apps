@@ -2,11 +2,11 @@ domainName: "default-customer"
 
 persistence:
   size: "5Gi"
-
+  
 resources:
   requests:
     cpu: "100m"
-    memory: "2048Mi"
+    memory: "512Mi"
   limits:
-    cpu: "400m"
-    memory: "2040Mi"
+    cpu: "200m"
+    memory: "1500Mi"

@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: ebs-es-pvc
-  namespace: opolo
-spec:
-  resources:
-    requests:
-      storage: 5Gi
