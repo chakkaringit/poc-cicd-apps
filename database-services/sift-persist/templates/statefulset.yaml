@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: sift-persist
+spec:
+  serviceName: sift-persist
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sift-persist-pod
+  template:
+    metadata:
+      labels:
+        app: sift-persist-pod
+    spec:
+      imagePullSecrets:
+      - name: regcred
+      containers:
+      - name: sift-persist
+        image: chakkarinsom/persist:4.5.0-K8
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 200m
+            memory: 2048Mi
+          limits:
+            cpu: 200m
+            memory: 2048Mi
+        env:
+        - name: TYPE
+          value: MASTER
+        - name: START_MODE
+          value: INIT
+        ports:
+        - containerPort: 8091
+        volumeMounts:
+        - mountPath: /opt/couchbase/var
+          name: data-volume
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - isOpen=`netstat -ant | grep 8091 | wc -l | awk '{print $1}'`;if [ $isOpen
+              -lt 1 ]; then return 1; else echo "Found"; fi
+          initialDelaySeconds: 300
+          periodSeconds: 60
+      volumes:
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: ebs-persist-pvc

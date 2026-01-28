@@ -8,10 +8,12 @@ metadata:
 spec:
   project: default
   source:
-    path: database-services/sift-persist/overlays/${TIER_OVERLAY}
+    path: database-services/sift-persist
     repoURL: https://github.com/chakkaringit/poc-cicd-apps
     targetRevision: main
     helm:
+      valueFiles:
+        - "values-${TIER_OVERLAY}.yaml"
       parameters:
         - name: domainName
           value: "${WILDCARD_DOMAIN}"
