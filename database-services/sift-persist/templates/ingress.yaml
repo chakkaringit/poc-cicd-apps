@@ -9,7 +9,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
-  - host: "*.{{ .Values.domainName }}"
+  - host: "nueng.{{ .Values.domainName }}"
     http:
       paths:
       - path: /persist(/|$)(.*)
