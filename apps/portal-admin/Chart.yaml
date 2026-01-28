@@ -1,0 +1,3 @@
+apiVersion: v2
+name: portal-admin
+version: 1.0.0

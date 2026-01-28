@@ -20,7 +20,13 @@ spec:
       source:
         repoURL: https://github.com/chakkaringit/poc-cicd-apps
         targetRevision: main
-        path: '{{path}}/overlays/${TIER_OVERLAY}'
+        path: '{{path}}'
+        helm:
+          valueFiles:
+            - "values-${TIER_OVERLAY}.yaml"
+          parameters:
+            - name: domainName
+              value: "${WILDCARD_DOMAIN}"
       destination:
         server: https://kubernetes.default.svc
         namespace: opolo
