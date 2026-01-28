@@ -1,4 +1,8 @@
 domainName: "default-customer"
+
+persistence:
+  size: "5Gi"
+  
 resources:
   requests:
     cpu: "100m"

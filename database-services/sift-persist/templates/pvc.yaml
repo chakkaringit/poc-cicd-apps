@@ -8,5 +8,5 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 5Gi
+      storage: {{ .Values.persistence.size | default "5Gi" }}
   storageClassName: efs-sc
