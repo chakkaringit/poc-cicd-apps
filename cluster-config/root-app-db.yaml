@@ -11,6 +11,10 @@ spec:
     path: database-services/sift-persist/overlays/${TIER_OVERLAY}
     repoURL: https://github.com/chakkaringit/poc-cicd-apps
     targetRevision: main
+    helm:
+      parameters:
+        - name: domainName
+          value: "${WILDCARD_DOMAIN}"
   destination:
     server: https://kubernetes.default.svc
     namespace: opolo

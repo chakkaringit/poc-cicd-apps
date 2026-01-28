@@ -73,3 +73,12 @@ spec:
         ports:
         - containerPort: 8080
         - containerPort: 10080
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - isOpen=`netstat -ant | grep 10080 | wc -l | awk '{print $1}'`;if [ $isOpen
+              -lt 1 ]; then return 1; else echo "Found"; fi
+          initialDelaySeconds: 300
+          periodSeconds: 60
