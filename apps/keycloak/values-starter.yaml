@@ -1,0 +1,12 @@
+domainName: "default-customer"
+
+persistence:
+  size: "5Gi"
+  
+resources:
+  requests:
+    cpu: "100m"
+    memory: "512Mi"
+  limits:
+    cpu: "200m"
+    memory: "512Mi"

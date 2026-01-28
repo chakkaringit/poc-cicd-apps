@@ -1,0 +1,3 @@
+apiVersion: v2
+name: persistance-api
+version: 1.0.0
