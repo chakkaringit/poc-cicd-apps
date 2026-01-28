@@ -9,4 +9,4 @@ resources:
     memory: "2048Mi"
   limits:
     cpu: "400m"
-    memory: "2040Mi"
+    memory: "2048Mi"
