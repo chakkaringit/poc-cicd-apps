@@ -38,9 +38,15 @@ metadata:
 spec:
   project: default
   source:
-    path: database-services/postgresql/overlays/${TIER_OVERLAY}
+    path: database-services/postgresql
     repoURL: https://github.com/chakkaringit/poc-cicd-apps
     targetRevision: main
+    helm:
+      valueFiles:
+        - "values-${TIER_OVERLAY}.yaml"
+      parameters:
+        - name: domainName
+          value: "${WILDCARD_DOMAIN}"
   destination:
     server: https://kubernetes.default.svc
     namespace: opolo
@@ -62,9 +68,15 @@ metadata:
 spec:
   project: default
   source:
-    path: database-services/opolo-redis/overlays/${TIER_OVERLAY}
+    path: database-services/opolo-redis
     repoURL: https://github.com/chakkaringit/poc-cicd-apps
     targetRevision: main
+    helm:
+      valueFiles:
+        - "values-${TIER_OVERLAY}.yaml"
+      parameters:
+        - name: domainName
+          value: "${WILDCARD_DOMAIN}"
   destination:
     server: https://kubernetes.default.svc
     namespace: opolo
@@ -86,9 +98,15 @@ metadata:
 spec:
   project: default
   source:
-    path: database-services/sift-registry/overlays/${TIER_OVERLAY}
+    path: database-services/sift-registry
     repoURL: https://github.com/chakkaringit/poc-cicd-apps
     targetRevision: main
+    helm:
+      valueFiles:
+        - "values-${TIER_OVERLAY}.yaml"
+      parameters:
+        - name: domainName
+          value: "${WILDCARD_DOMAIN}"
   destination:
     server: https://kubernetes.default.svc
     namespace: opolo
@@ -110,9 +128,15 @@ metadata:
 spec:
   project: default
   source:
-    path: database-services/sift-queue/overlays/${TIER_OVERLAY}
+    path: database-services/sift-queue
     repoURL: https://github.com/chakkaringit/poc-cicd-apps
     targetRevision: main
+    helm:
+      valueFiles:
+        - "values-${TIER_OVERLAY}.yaml"
+      parameters:
+        - name: domainName
+          value: "${WILDCARD_DOMAIN}"
   destination:
     server: https://kubernetes.default.svc
     namespace: opolo
@@ -134,9 +158,15 @@ metadata:
 spec:
   project: default
   source:
-    path: database-services/sift-es/overlays/${TIER_OVERLAY}
+    path: database-services/sift-es
     repoURL: https://github.com/chakkaringit/poc-cicd-apps
     targetRevision: main
+    helm:
+      valueFiles:
+        - "values-${TIER_OVERLAY}.yaml"
+      parameters:
+        - name: domainName
+          value: "${WILDCARD_DOMAIN}"
   destination:
     server: https://kubernetes.default.svc
     namespace: opolo
