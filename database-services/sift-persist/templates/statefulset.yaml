@@ -20,12 +20,7 @@ spec:
         image: chakkarinsom/persist:4.5.0-K8
         imagePullPolicy: Always
         resources:
-          requests:
-            cpu: 200m
-            memory: 2048Mi
-          limits:
-            cpu: 200m
-            memory: 2048Mi
+          {{- toYaml .Values.resources | nindent 10 }}
         env:
         - name: TYPE
           value: MASTER
