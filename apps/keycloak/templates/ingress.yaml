@@ -11,7 +11,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-buffers-number: "4"
 spec:
   rules:
-  - host: "keycloak-{{ .Values.domainName }}"
+  - host: "keycloak{{ .Values.domainName }}"
     http:
       paths:
       - path: /
