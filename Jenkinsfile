@@ -67,7 +67,7 @@ pipeline {
                             echo "✅ Configuration Applied with Tier: ${env.TIER_OVERLAY}"
                             
                             echo "⏳ Waiting for Persistence Layer..."
-                            sleep 30
+                            sleep 300
                             
                             // ท่ายาก: วนลูปเช็คสถานะ
                             timeout(time: 5, unit: 'MINUTES') {
@@ -121,7 +121,7 @@ pipeline {
                             echo "✅ Configuration Applied with Tier: ${env.TIER_OVERLAY}"
                             
                             echo "⏳ Waiting for Apps Layer..."
-                            sleep 30
+                            sleep 300
                             
                             // ท่ายาก: วนลูปเช็คสถานะ
                             timeout(time: 5, unit: 'MINUTES') {
