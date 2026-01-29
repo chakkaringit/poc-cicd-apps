@@ -99,9 +99,9 @@ spec:
         ports:
         - containerPort: 8042
           protocol: TCP
+        resources:
+          {{- toYaml .Values.resources | nindent 10 }}
       imagePullSecrets:
-      - name: regcred
-      resources:
-        {{- toYaml .Values.resources | nindent 8 }}
+      - name: regcred     
       serviceAccount: siftmanage
       serviceAccountName: siftmanage
