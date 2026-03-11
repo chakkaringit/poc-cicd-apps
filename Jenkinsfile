@@ -6,10 +6,12 @@ pipeline {
         string(name: 'GIT_REPO_URL', defaultValue: 'https://github.com/chakkaringit/poc-cicd-apps.git', description: 'GitOps Repository URL')
         choice(name: 'SUBSCRIPTION_TIER', choices: ['starter', 'basic', 'power'], description: 'Service Level Agreement')
         string(name: 'WILDCARD_DOMAIN', defaultValue: 'prod.knowesis.quiinsfelicity.shop', description: 'Wildcard Domain Name with environment and company name (e.g. prod.knowesis.quiinsfelicity.shop)')
+        string(name: 'INPUT_AWS_REGION', defaultValue: 'ap-southeast-1', description:'Infra Region ap-southeast-1)')
     }
 
     environment {
-        AWS_REGION = 'ap-southeast-1'
+        //AWS_REGION = 'ap-southeast-1'
+        AWS_REGION = "${params.INPUT_AWS_REGION}"
         
         // ID ของ Credential ใน Jenkins
         AWS_CRED_ID = 'maas-aws-key-main'
