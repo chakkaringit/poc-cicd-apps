@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: sift-datasource-data-source-test-framework
-        image: chakkarinsom/sift-core:V7.5.1
+        image: chakkarinsom/sift-core:V7.5.1.xxx
         imagePullPolicy: Always
         env:
         - name: TZ
